@@ -103,12 +103,18 @@ celerybeat.pid
 
 # Environments
 .env
+**/.env
 .venv
 env/
 venv/
 ENV/
 env.bak/
 venv.bak/
+
+#local debug file
+dagster.yaml
+/tmp*
+
 
 # Spyder project settings
 .spyderproject
