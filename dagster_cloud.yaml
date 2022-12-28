@@ -1,0 +1,4 @@
+locations:
+  - location_name: dagster_cloud
+    code_source:
+      package_name: CountMoney_orchestration
