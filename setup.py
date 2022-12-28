@@ -9,7 +9,7 @@ setup(
         "pandas",
         "sqlalchemy==1.4.32",
         "tushare",
-        "psycopg2",
+        "psycopg2-binary==2.9.3",
     ],
     extras_require={"dev": ["dagit", "pytest"]},
 )
