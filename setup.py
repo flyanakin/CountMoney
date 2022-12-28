@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name="CountMoney_orchestration1",
+    name="CountMoney_orchestration",
     packages=find_packages(exclude=["CountMoney_orchestration_tests"]),
     install_requires=[
         "dagster",
