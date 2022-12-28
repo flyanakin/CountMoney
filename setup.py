@@ -7,7 +7,7 @@ setup(
         "dagster",
         "dagster-cloud",
         "pandas",
-        "sqlalchemy",
+        "sqlalchemy==1.4.32",
         "tushare",
         "psycopg2",
     ],
