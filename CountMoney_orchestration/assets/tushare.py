@@ -64,3 +64,36 @@ def balance_sheet(context) -> pd.DataFrame:
     created_at = round(time())
     data['created_at'] = created_at
     return data
+
+
+@asset(
+    io_manager_key="tushare_pg_append_io_manager",
+    group_name="tushare",
+    op_tags={"group": "EL"},
+    name="income_statement",
+    config_schema={"mode": str},
+)
+def income_statement(context) -> pd.DataFrame:
+    """
+    利润表（单季）
+    :param context:
+    :return:
+    """
+    pro = ts.pro_api(f"{TUSHARE_TOKEN}")
+    if context.op_config["mode"] == "history":
+        report_period = date_trans.report_date_generate(
+            ["2020", "2021", "2022"]
+        )  ##回溯3年历史数据
+        data = pro.income_vip(period=report_period[0], report_type=2)
+        data.drop(data.index, inplace=True)
+        for i in range(len(report_period)):
+            data_q = pro.income_vip(period=report_period[i], report_type=2)
+            data = pd.concat([data, data_q])
+    elif context.op_config["mode"] == "daily":
+        today = date.strftime(date.today(), "%Y%m%d")
+        data = pro.income_vip(ann_date=today, report_type=2)
+    else:
+        ValueError("Unsupported value: " + str(context.op_config["mode"]))
+    created_at = round(time())
+    data['created_at'] = created_at
+    return data

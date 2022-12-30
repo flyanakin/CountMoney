@@ -5,6 +5,11 @@ from CountMoney_orchestration.resources import resources_prod
 
 load_history_data = define_asset_job(
     name="load_history_data",
-    selection=AssetSelection.keys("balance_sheet"),
-    config={"ops": {"balance_sheet": {"config": {"mode": "history"}}}},
+    selection=["balance_sheet", "income_statement"],
+    config={
+        "ops": {
+            "balance_sheet": {"config": {"mode": "history"}},
+            "income_statement": {"config": {"mode": "history"}},
+        }
+    },
 )
