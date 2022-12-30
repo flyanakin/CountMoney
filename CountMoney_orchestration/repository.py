@@ -1,11 +1,12 @@
 from dagster import load_assets_from_modules, repository, with_resources
 from CountMoney_orchestration.assets import tushare
 from CountMoney_orchestration.jobs.load_basic_info import load_basic_info
-from CountMoney_orchestration.jobs.load_history_data import load_history
+from CountMoney_orchestration.jobs.demo import demo
+from CountMoney_orchestration.jobs.load_history_data import load_history_data
 from CountMoney_orchestration.resources import resources_prod
 
 all_assets = load_assets_from_modules([tushare])
-all_jobs = [load_basic_info, load_history]
+all_jobs = [load_basic_info, demo, load_history_data]
 
 
 @repository
