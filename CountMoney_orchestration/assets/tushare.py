@@ -97,3 +97,25 @@ def income_statement(context) -> pd.DataFrame:
     created_at = round(time())
     data['created_at'] = created_at
     return data
+
+
+@asset(
+    io_manager_key="tushare_pg_append_io_manager",
+    group_name="tushare",
+    op_tags={"group": "EL"},
+    name="daily_basic_index",
+)
+def daily_basic_index() -> pd.DataFrame:
+    """
+    每日PE等基本指标数据
+    :param context:
+    :return:
+    """
+    pro = ts.pro_api(f"{TUSHARE_TOKEN}")
+    today = date.strftime(date.today(), "%Y%m%d")
+    calendar = pro.query('trade_cal', start_date='20221201', end_date=today)
+    last_trade_date = (calendar.loc[calendar['is_open'] == 1]).iloc[-1]['cal_date']
+    data = pro.query('daily_basic', trade_date=last_trade_date)
+    created_at = round(time())
+    data['created_at'] = created_at
+    return data
