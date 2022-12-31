@@ -45,6 +45,7 @@ class PandasSqlIOManager(IOManager):
             index=False,
             schema=self.__schema,
             if_exists=self.__write_mode,
+            chunksize=5000,
         )
 
     def load_input(self, context: "InputContext"):
