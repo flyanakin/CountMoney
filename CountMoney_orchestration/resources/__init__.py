@@ -39,10 +39,13 @@ dbt_resource = dbt_cli_resource.configured(
     {
         "project_dir": DBT_PROJECT_DIR,
         "profiles_dir": DBT_PROFILES_DIR,
-        "select": "*",
-        "target": os.environ["WAREHOUSE_ENGINE"],
     }
 )
+
+dbt_resource_def = {
+    "dbt": dbt_resource,
+}
+
 
 resources_prod = {
     "tushare_pg_append_io_manager": tushare_append_io_manager,

@@ -1,0 +1,14 @@
+CountMoney_model:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: warehouse.bloomingspring.cn
+      user: elt
+      password: "{{ env_var('WAREHOUSE_SECRET') }}"
+      port: 5432
+      dbname: warehouse
+      schema: finance
+      threads: 1
+      keepalives_idle: 0
+      connect_timeout: 10 # default 10 seconds
