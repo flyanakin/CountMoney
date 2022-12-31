@@ -6,7 +6,7 @@ setup(
     install_requires=[
         "dagster",
         "dagster-cloud",
-        "dagster_dbt",
+        "dagster-dbt==0.17.7",
         "dbt-core==1.3.1",
         "dbt-postgres==1.3.1",
         "pandas",
