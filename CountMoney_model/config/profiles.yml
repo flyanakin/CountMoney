@@ -3,8 +3,8 @@ CountMoney_model:
   outputs:
     dev:
       type: postgres
-      host: warehouse.bloomingspring.cn
-      user: elt
+      host: "{{ env_var('WAREHOUSE_HOST') }}"
+      user: "{{ env_var('WAREHOUSE_USER') }}"
       password: "{{ env_var('WAREHOUSE_SECRET') }}"
       port: 5432
       dbname: warehouse
