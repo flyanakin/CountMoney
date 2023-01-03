@@ -24,12 +24,13 @@ def CountMoney_orchestration():
     )
 
     tushare_assets = with_resources(
-        load_assets_from_modules([tushare]), resource_defs=resources_prod
+        load_assets_from_modules(modules=[tushare]),
+        resource_defs=resources_prod,
     )
 
     all_assets = [dbt_assets, tushare_assets]
 
-    all_jobs = [load_basic_info, demo, load_history_data, daily_asset_job]
+    all_jobs = [demo, daily_asset_job]
 
     definitions = all_assets + all_jobs
     return definitions

@@ -17,8 +17,8 @@ tushare_append_io_manager = pandas_sql_append_io_manager.configured(
         "warehouse_hosts": os.environ["WAREHOUSE_HOSTS"],
         "warehouse_user": os.environ["WAREHOUSE_USER"],
         "warehouse_secret": os.environ["WAREHOUSE_SECRET"],
-        "destination_db": "datasources",
-        "destination_schema": "tushare",
+        "destination_db": "warehouse",
+        "destination_schema": "datasources",
     }
 )
 
@@ -27,8 +27,8 @@ tushare_replace_io_manager = pandas_sql_replace_io_manager.configured(
         "warehouse_hosts": os.environ["WAREHOUSE_HOSTS"],
         "warehouse_user": os.environ["WAREHOUSE_USER"],
         "warehouse_secret": os.environ["WAREHOUSE_SECRET"],
-        "destination_db": "datasources",
-        "destination_schema": "tushare",
+        "destination_db": "warehouse",
+        "destination_schema": "datasources",
     }
 )
 
