@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: stock_picks
+    description: 综合财务数据等，优选股票
+    columns:
+      - name: ts_code
+        description: tushare股票代码

@@ -1,0 +1,36 @@
+version: 2
+
+sources:
+  - name: tushare # this is the source_name
+    database: warehouse
+    schema: datasources
+    tables:
+      - name: tushare_balance_sheet
+        description: 资产负债表
+        columns:
+          - name: ts_code
+            description: tushare股票代码
+
+      - name: tushare_income_statement
+        description: 利润表（单季）
+        columns:
+          - name: ts_code
+            description: tushare股票代码
+
+      - name: tushare_stock_basic
+        description: 股票基本信息
+        columns:
+          - name: ts_code
+            description: tushare股票代码
+
+      - name: tushare_trade_calendar
+        description: 交易日历
+        columns:
+          - name: cal_date
+            description: 日历日期
+
+      - name: tushare_daily_basic_index
+        description: 每日股票基本指标
+        columns:
+          - name: ts_code
+            description: tushare股票代码

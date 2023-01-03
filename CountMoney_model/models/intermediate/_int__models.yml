@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: int_stock_statement
+    description: 财务报表融合，单季
+    columns:
+      - name: ts_code
+        description: tushare股票代码

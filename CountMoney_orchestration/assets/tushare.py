@@ -11,23 +11,25 @@ from CountMoney_orchestration.utils import date_trans
 
 @asset(
     io_manager_key="tushare_pg_replace_io_manager",
-    group_name="tushare",
+    key_prefix="tushare",
+    group_name="staging",
     op_tags={"group": "EL"},
-    name="stock_basic",
+    name="tushare_stock_basic",
 )
-def stock_basic():
+def tushare_stock_basic():
     pro = ts.pro_api(f"{TUSHARE_TOKEN}")
     data = pro.query('stock_basic', exchange='', list_status='L')
     return data
 
 
 @asset(
-    io_manager_key="tushare_pg_append_io_manager",
-    group_name="tushare",
+    io_manager_key="tushare_pg_replace_io_manager",
+    key_prefix="tushare",
+    group_name="staging",
     op_tags={"group": "EL"},
-    name="trade_calendar",
+    name="tushare_trade_calendar",
 )
-def trade_calendar():
+def tushare_trade_calendar():
     pro = ts.pro_api(f"{TUSHARE_TOKEN}")
     data = pro.query('trade_cal', start_date='20180101', end_date='20221231')
     return data
@@ -35,12 +37,13 @@ def trade_calendar():
 
 @asset(
     io_manager_key="tushare_pg_append_io_manager",
-    group_name="tushare",
+    key_prefix="tushare",
+    group_name="staging",
     op_tags={"group": "EL"},
-    name="balance_sheet",
+    name="tushare_balance_sheet",
     config_schema={"mode": str},
 )
-def balance_sheet(context) -> pd.DataFrame:
+def tushare_balance_sheet(context) -> pd.DataFrame:
     """
     资产负债表
     :param context:
@@ -68,12 +71,13 @@ def balance_sheet(context) -> pd.DataFrame:
 
 @asset(
     io_manager_key="tushare_pg_append_io_manager",
-    group_name="tushare",
+    key_prefix="tushare",
+    group_name="staging",
     op_tags={"group": "EL"},
-    name="income_statement",
+    name="tushare_income_statement",
     config_schema={"mode": str},
 )
-def income_statement(context) -> pd.DataFrame:
+def tushare_income_statement(context) -> pd.DataFrame:
     """
     利润表（单季）
     :param context:
@@ -101,11 +105,12 @@ def income_statement(context) -> pd.DataFrame:
 
 @asset(
     io_manager_key="tushare_pg_append_io_manager",
-    group_name="tushare",
+    key_prefix="tushare",
+    group_name="staging",
     op_tags={"group": "EL"},
-    name="daily_basic_index",
+    name="tushare_daily_basic_index",
 )
-def daily_basic_index() -> pd.DataFrame:
+def tushare_daily_basic_index() -> pd.DataFrame:
     """
     每日PE等基本指标数据
     :param context:

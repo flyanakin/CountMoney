@@ -40,13 +40,14 @@ class PandasSqlIOManager(IOManager):
             f"postgresql://{self.__user}:{self.__secret}@{self.__hosts}/{self.__database}"
         )
         df.to_sql(
-            name=context.asset_key[0][0],
+            name=context.asset_key[0][1],
             con=engine,
             index=False,
             schema=self.__schema,
             if_exists=self.__write_mode,
             chunksize=5000,
         )
+        context.log.info(f"{context.asset_key}")
 
     def load_input(self, context: "InputContext"):
         """

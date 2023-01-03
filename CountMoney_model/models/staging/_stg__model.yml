@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: stg_tushare_balance_sheet
+    description: 清洗层资产负债表
+    columns:
+      - name: ts_code
+        description: tushare股票代码
+
+  - name: stg_tushare_income_statement
+    description: 清洗层利润表（单季）
+    columns:
+      - name: ts_code
+        description: tushare股票代码
+
+  - name: stg_tushare_daily_basic_index
+    description: 清洗层每日基础指标
+    columns:
+      - name: ts_code
+        description: tushare股票代码
+
+  - name: stg_tushare_stock_basic
+    description: 清洗层股票基础数据
+    columns:
+      - name: ts_code
+        description: tushare股票代码
