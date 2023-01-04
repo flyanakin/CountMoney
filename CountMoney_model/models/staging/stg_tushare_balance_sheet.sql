@@ -14,6 +14,7 @@ error_cleaned as (
 
 formatted as (
     select
+        report_id,
         ts_code,
         {{ tushare_date_formatted('ann_date') }},
         {{ tushare_date_formatted('end_date') }},
