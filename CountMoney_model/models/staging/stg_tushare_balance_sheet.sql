@@ -19,6 +19,7 @@ formatted as (
         {{ tushare_date_formatted('end_date') }},
         {{ company_type_trans('comp_type') }},
         {{ report_type_trans('report_type') }},
+        {{ statement_period_trans('end_type') }},
 
         {% for atom_metric in atom_metrics %}
         {{ atom_metric }},
