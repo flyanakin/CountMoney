@@ -70,7 +70,7 @@ def tushare_balance_sheet(context) -> pd.DataFrame:
     data['md5'] = (
         data['ts_code'] + data['f_ann_date'] + data['end_date'] + data['update_flag']
     )
-    data['report_id'] = [
+    data['statement_id'] = [
         hashlib.md5(val.encode('utf-8')).hexdigest() for val in data['md5']
     ]
     data = data.drop(['md5'], axis=1)
@@ -114,7 +114,7 @@ def tushare_income_statement(context) -> pd.DataFrame:
     data['md5'] = (
         data['ts_code'] + data['f_ann_date'] + data['end_date'] + data['update_flag']
     )
-    data['report_id'] = [
+    data['statement_id'] = [
         hashlib.md5(val.encode('utf-8')).hexdigest() for val in data['md5']
     ]
     data = data.drop(['md5'], axis=1)

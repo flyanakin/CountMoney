@@ -5,7 +5,16 @@
                        ] %}
 
 with import as (
-    select * from {{ source('tushare', 'tushare_balance_sheet') }}
+    --输入按created_time去重
+    select * from (
+        select
+            *,
+            row_number() over (
+                partition by statement_id
+                order by ann_date desc
+                ) as rn
+        from {{ source('tushare', 'tushare_balance_sheet') }}) as partitioned
+    where partitioned.rn = 1
 ),
 
 error_cleaned as (
@@ -14,7 +23,7 @@ error_cleaned as (
 
 formatted as (
     select
-        report_id,
+        statement_id,
         ts_code,
         {{ tushare_date_formatted('ann_date') }},
         {{ tushare_date_formatted('end_date') }},

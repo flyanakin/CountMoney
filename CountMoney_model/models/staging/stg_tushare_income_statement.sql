@@ -1,22 +1,26 @@
 {% set atom_metrics = ["total_revenue", "n_income_attr_p"] %}
 
 with import as (
-    select
-        *,
-        row_number() over (
-            partition by ts_code
-            order by ann_date desc
-            )
-    from {{ source('tushare', 'tushare_income_statement') }}
+    --输入按created_time去重
+    select * from (
+        select
+            *,
+            row_number() over (
+                partition by statement_id
+                order by ann_date desc
+                ) as rn
+        from {{ source('tushare', 'tushare_income_statement') }}) as partitioned
+    where partitioned.rn = 1
 ),
 
 error_cleaned as (
- select * from import
+    select * from import
+    where rn = 1
 ),
 
 formatted as (
- select
-     report_id,
+    select
+     statement_id,
      ts_code,
      {{ tushare_date_formatted('ann_date') }},
      {{ tushare_date_formatted('end_date') }},
@@ -30,11 +34,11 @@ formatted as (
 
      update_flag,
      created_at
- from error_cleaned
+    from error_cleaned
 ),
 
 final as (
- select * from formatted
+    select * from formatted
 )
 
 select * from final
