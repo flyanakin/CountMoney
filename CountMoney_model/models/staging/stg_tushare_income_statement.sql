@@ -1,4 +1,4 @@
-{% set atom_metrics = ["total_revenue", "n_income_attr_p"] %}
+{% set atom_metrics = ["total_revenue","n_income_attr_p"] %}
 
 with import as (
     --输入按created_time去重
@@ -23,13 +23,14 @@ formatted as (
      statement_id,
      ts_code,
      {{ tushare_date_formatted('ann_date') }},
+     {{ tushare_date_formatted('f_ann_date') }},
      {{ tushare_date_formatted('end_date') }},
      {{ company_type_trans('comp_type') }},
      {{ report_type_trans('report_type') }},
      {{ statement_period_trans('end_type') }},
 
      {% for atom_metric in atom_metrics %}
-     {{ atom_metric }},
+     round({{ atom_metric }}::numeric, 2) as {{ atom_metric }},
      {%- endfor %}
 
      update_flag,
@@ -38,7 +39,20 @@ formatted as (
 ),
 
 final as (
-    select * from formatted
+    select
+        statement_id,
+        ts_code as stock_code,
+        ann_date,
+        f_ann_date,
+        end_date,
+        company_type,
+        report_type,
+        statement_period,
+        total_revenue,
+        n_income_attr_p as net_income_exclude_minority,
+        update_flag,
+        created_at
+    from formatted
 )
 
 select * from final
