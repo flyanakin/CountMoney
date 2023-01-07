@@ -58,8 +58,8 @@ last_quarter as (
 ttm as (
     select
         stock_code,
-        sum(total_revenue) as total_revenue,
-        sum(net_income_exclude_minority) as net_income_exclude_minority
+        round(sum(total_revenue)) as total_revenue,
+        round(sum(net_income_exclude_minority)) as net_income_exclude_minority
     from lastest_4_quarter
     group by stock_code
 ),

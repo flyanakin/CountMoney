@@ -31,8 +31,8 @@ qi_a_index_defence as (
         {{ receivables_index('accounts_receiv', 'notes_receiv', 'oth_receiv', 'lt_rec', 'total_revenue_ttm') }} as receivables_index,
         net_income_ttm,
         net_income_exclude_minority as net_income_lastest,
-        (total_revenue - total_revenue_last_year) as growth_total_revenue_yearly,
-        (net_income_exclude_minority - net_income_last_year) as growth_net_income_yearly,
+        round((total_revenue - total_revenue_last_year)) as growth_total_revenue_yearly,
+        round((net_income_exclude_minority - net_income_last_year)) as growth_net_income_yearly
 
     from balance
     left join income_pivoted
@@ -45,10 +45,26 @@ final as (
     select
         stock.stock_code,
         stock.stock_name,
-
+        stock.industry,
+        qi_a_index_defence.end_date,
+        qi_a_index_defence.insolvent_index,
+        qi_a_index_defence.impairment_goodwill_index,
+        qi_a_index_defence.current_ratio,
+        qi_a_index_defence.receivables_index,
+        qi_a_index_defence.net_income_ttm,
+        qi_a_index_defence.net_income_lastest,
+        qi_a_index_defence.growth_total_revenue_yearly,
+        qi_a_index_defence.growth_net_income_yearly,
+        daily_index.close,
+        daily_index.pe_ttm,
+        daily_index.dividend_ratio,
+        daily_index.dividend_ratio_ttm,
+        daily_index.total_market_capitalization
     from stock
     left join qi_a_index_defence
         on stock.stock_code = qi_a_index_defence.stock_code
+    left join daily_index
+        on stock.stock_code = daily_index.stock_code
 )
 
 select * from final

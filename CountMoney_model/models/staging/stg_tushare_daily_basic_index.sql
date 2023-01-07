@@ -1,6 +1,10 @@
 {% set unit_covert_fields = ["total_share", "float_share", "free_share", "total_mv",
                              "circ_mv"] %}
 
+{% set number_fields =  ["close", "turnover_rate", "turnover_rate_f", "volume_ratio", "pe",
+                         "pe_ttm", "pb", "ps", "ps_ttm", "dv_ratio", "dv_ttm", "total_share",
+                         "float_share", "free_share", "total_mv", "circ_mv"] %}
+
 
 
 with import as (
@@ -11,22 +15,10 @@ formatted as (
     select
         ts_code,
         {{ tushare_date_formatted('trade_date') }},
-        close,
-        turnover_rate,
-        turnover_rate_f,
-        volume_ratio,
-        pe,
-        pe_ttm,
-        pb,
-        ps,
-        ps_ttm,
-        dv_ratio,
-        dv_ttm,
-        total_share,
-        float_share,
-        free_share,
-        total_mv,
-        circ_mv,
+        {% for number_field in number_fields %}
+        round({{ number_field }}::numeric, 2) as {{ number_field }},
+        {%- endfor %}
+
         created_at
     from import
 ),
