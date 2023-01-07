@@ -6,6 +6,7 @@ from dagster import asset
 from CountMoney_orchestration.resources import TUSHARE_TOKEN
 from datetime import date
 from time import time
+import hashlib
 from CountMoney_orchestration.utils import date_trans
 
 
@@ -64,6 +65,16 @@ def tushare_balance_sheet(context) -> pd.DataFrame:
         data = pro.balancesheet_vip(ann_date=today, report_type=1)
     else:
         ValueError("Unsupported value: " + str(context.op_config["mode"]))
+
+    ##生成md5 id
+    data['md5'] = (
+        data['ts_code'] + data['f_ann_date'] + data['end_date'] + data['update_flag']
+    )
+    data['statement_id'] = [
+        hashlib.md5(val.encode('utf-8')).hexdigest() for val in data['md5']
+    ]
+    data = data.drop(['md5'], axis=1)
+    ##生成入库时间
     created_at = round(time())
     data['created_at'] = created_at
     return data
@@ -98,6 +109,16 @@ def tushare_income_statement(context) -> pd.DataFrame:
         data = pro.income_vip(ann_date=today, report_type=2)
     else:
         ValueError("Unsupported value: " + str(context.op_config["mode"]))
+
+    ##生成md5 id
+    data['md5'] = (
+        data['ts_code'] + data['f_ann_date'] + data['end_date'] + data['update_flag']
+    )
+    data['statement_id'] = [
+        hashlib.md5(val.encode('utf-8')).hexdigest() for val in data['md5']
+    ]
+    data = data.drop(['md5'], axis=1)
+    ##生成入库时间
     created_at = round(time())
     data['created_at'] = created_at
     return data

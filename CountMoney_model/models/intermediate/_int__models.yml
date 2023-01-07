@@ -1,8 +1,26 @@
 version: 2
 
 models:
-  - name: int_stock_statement
-    description: 财务报表融合，单季
+  - name: int_balance_sheet_lastest
+    description: 选择最新的资产负债表
     columns:
-      - name: ts_code
-        description: tushare股票代码
+      - name: stock_code
+        description: 股票代码
+
+  - name: int_income_statement_lastest
+    description: 最新的利润表
+    columns:
+      - name: stock_code
+        description: 股票代码
+        
+  - name: int_income_pivoted_to_stock
+    description: 利润表聚合数据
+    columns:
+      - name: stock_code
+        description: 股票代码
+
+  - name: int_daily_basic_index_lastest
+    description: 最新的每日指标
+    columns:
+      - name: stock_code
+        description: 股票代码

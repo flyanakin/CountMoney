@@ -1,38 +1,70 @@
 with
-basic as (
+stock as (
     select * from {{ ref('stg_tushare_stock_basic') }}
 ),
 
-statement as (
-    select * from (
-        select
-            *,
-            row_number() over (
-                partition by ts_code
-                order by end_date desc
-                ) as rn
-        from {{ ref('int_stock_statement') }}) as import
-    where import.rn = 1
+daily_index as (
+    select * from {{ ref('int_daily_basic_index_lastest') }}
 ),
 
-daily_index as (
-    select * from (
-        select
-            *,
-            row_number() over (
-                partition by ts_code
-                order by trade_date desc
-                ) as rn
-        from {{ ref('stg_tushare_daily_basic_index') }}) as import
-    where import.rn = 1
+balance as (
+    select * from {{ ref('int_balance_sheet_lastest') }}
+),
+
+income as (
+    select * from {{ ref('int_income_statement_lastest') }}
+),
+
+income_pivoted as (
+    select * from {{ ref('int_income_pivoted_to_stock') }}
+),
+
+qi_a_index_defence as (
+    select
+        balance.stock_code,
+        balance.end_date,
+        {{ insolvent_index('total_cur_assets', 'total_cur_liab',
+        'lt_borr', 'bond_payable') }} as insolvent_index,
+        {{ impairment_goodwill_index('goodwill', 'r_and_d', 'intan_assets',
+        'total_hldr_eqy_exc_min_int', 'oth_eqt_tools_p_shr', 'oth_eqt_tools') }} as impairment_goodwill_index,
+        {{ current_ratio('total_cur_assets','total_cur_liab') }} as current_ratio,
+        {{ receivables_index('accounts_receiv', 'notes_receiv', 'oth_receiv', 'lt_rec', 'total_revenue_ttm') }} as receivables_index,
+        net_income_ttm,
+        net_income_exclude_minority as net_income_lastest,
+        round((total_revenue - total_revenue_last_year)) as growth_total_revenue_yearly,
+        round((net_income_exclude_minority - net_income_last_year)) as growth_net_income_yearly
+
+    from balance
+    left join income_pivoted
+    on balance.stock_code = income_pivoted.stock_code and balance.end_date = income_pivoted.last_end_date
+    left join income
+    on balance.stock_code = income.stock_code and balance.end_date = income.end_date
 ),
 
 final as (
     select
-        basic.ts_code
-    from basic
-    left join statement on statement.ts_code = basic.ts_code
-    left join daily_index on daily_index.ts_code = basic.ts_code
+        stock.stock_code,
+        stock.stock_name,
+        stock.industry,
+        qi_a_index_defence.end_date,
+        qi_a_index_defence.insolvent_index,
+        qi_a_index_defence.impairment_goodwill_index,
+        qi_a_index_defence.current_ratio,
+        qi_a_index_defence.receivables_index,
+        qi_a_index_defence.net_income_ttm,
+        qi_a_index_defence.net_income_lastest,
+        qi_a_index_defence.growth_total_revenue_yearly,
+        qi_a_index_defence.growth_net_income_yearly,
+        daily_index.close,
+        daily_index.pe_ttm,
+        daily_index.dividend_ratio,
+        daily_index.dividend_ratio_ttm,
+        daily_index.total_market_capitalization
+    from stock
+    left join qi_a_index_defence
+        on stock.stock_code = qi_a_index_defence.stock_code
+    left join daily_index
+        on stock.stock_code = daily_index.stock_code
 )
 
 select * from final
