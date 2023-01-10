@@ -7,7 +7,7 @@ with import as (
             *,
             row_number() over (
                 partition by statement_id
-                order by ann_date desc
+                order by created_at desc
                 ) as rn
         from {{ source('tushare', 'tushare_income_statement') }}) as partitioned
     where partitioned.rn = 1

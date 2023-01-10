@@ -42,7 +42,14 @@ def tushare_trade_calendar():
     group_name="staging",
     op_tags={"group": "EL"},
     name="tushare_balance_sheet",
-    config_schema={"mode": str},
+    config_schema={
+        "mode": str,
+        "ts_code": str,
+        "ann_date": str,
+        "start_date": str,
+        "end_date": str,
+        "period": str,
+    },
 )
 def tushare_balance_sheet(context) -> pd.DataFrame:
     """
@@ -51,7 +58,14 @@ def tushare_balance_sheet(context) -> pd.DataFrame:
     :return:
     """
     pro = ts.pro_api(f"{TUSHARE_TOKEN}")
-    if context.op_config["mode"] == "history":
+    __mode = context.op_config["mode"]
+    __ts_code = context.op_config["ts_code"]
+    __ann_date = context.op_config["ann_date"]
+    __start_date = context.op_config["start_date"]
+    __end_date = context.op_config["end_date"]
+    __period = context.op_config["period"]
+
+    if __mode == "history":
         report_period = date_trans.report_date_generate(
             ["2020", "2021", "2022"]
         )  ##回溯3年历史数据
@@ -60,9 +74,17 @@ def tushare_balance_sheet(context) -> pd.DataFrame:
         for i in range(len(report_period)):
             data_q = pro.balancesheet_vip(period=report_period[i], report_type=1)
             data = pd.concat([data, data_q])
-    elif context.op_config["mode"] == "daily":
+    elif __mode == "daily":
         today = date.strftime(date.today(), "%Y%m%d")
         data = pro.balancesheet_vip(ann_date=today, report_type=1)
+    elif __mode == "para":
+        data = pro.balancesheet_vip(
+            ts_code=__ts_code,
+            period=__period,
+            ann_date=__ann_date,
+            start_date=__start_date,
+            end_date=__end_date,
+        )
     else:
         ValueError("Unsupported value: " + str(context.op_config["mode"]))
 
@@ -86,7 +108,14 @@ def tushare_balance_sheet(context) -> pd.DataFrame:
     group_name="staging",
     op_tags={"group": "EL"},
     name="tushare_income_statement",
-    config_schema={"mode": str},
+    config_schema={
+        "mode": str,
+        "ts_code": str,
+        "ann_date": str,
+        "start_date": str,
+        "end_date": str,
+        "period": str,
+    },
 )
 def tushare_income_statement(context) -> pd.DataFrame:
     """
@@ -95,7 +124,14 @@ def tushare_income_statement(context) -> pd.DataFrame:
     :return:
     """
     pro = ts.pro_api(f"{TUSHARE_TOKEN}")
-    if context.op_config["mode"] == "history":
+    __mode = context.op_config["mode"]
+    __ts_code = context.op_config["ts_code"]
+    __ann_date = context.op_config["ann_date"]
+    __start_date = context.op_config["start_date"]
+    __end_date = context.op_config["end_date"]
+    __period = context.op_config["period"]
+
+    if __mode == "history":
         report_period = date_trans.report_date_generate(
             ["2020", "2021", "2022"]
         )  ##回溯3年历史数据
@@ -104,9 +140,17 @@ def tushare_income_statement(context) -> pd.DataFrame:
         for i in range(len(report_period)):
             data_q = pro.income_vip(period=report_period[i], report_type=2)
             data = pd.concat([data, data_q])
-    elif context.op_config["mode"] == "daily":
+    elif __mode == "daily":
         today = date.strftime(date.today(), "%Y%m%d")
         data = pro.income_vip(ann_date=today, report_type=2)
+    elif __mode == "para":
+        data = pro.income_vip(
+            ts_code=__ts_code,
+            period=__period,
+            ann_date=__ann_date,
+            start_date=__start_date,
+            end_date=__end_date,
+        )
     else:
         ValueError("Unsupported value: " + str(context.op_config["mode"]))
 
