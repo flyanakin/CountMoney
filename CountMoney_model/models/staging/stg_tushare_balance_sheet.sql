@@ -4,17 +4,18 @@
                        "lt_borr","bond_payable"
                        ] %}
 
-with import as (
+with
+import as (
     --输入按created_time去重
     select * from (
         select
             *,
             row_number() over (
                 partition by statement_id
-                order by ann_date desc
-                ) as rn
-        from {{ source('tushare', 'tushare_balance_sheet') }}) as partitioned
-    where partitioned.rn = 1
+                order by created_at desc
+                ) as rn_created_at
+        from {{ source('tushare', 'tushare_balance_sheet') }}) as t
+    where t.rn_created_at = 1
 ),
 
 error_cleaned as (
