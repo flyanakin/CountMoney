@@ -4,7 +4,7 @@ import as (
     select * from {{ ref('stg_tushare_daily_basic_index') }}
 ),
 
-lastest as (
+latest as (
     select * from (
         select
             *,
@@ -19,6 +19,6 @@ lastest as (
 final as (
     select
         *
-    from lastest
+    from latest
 )
 select * from final

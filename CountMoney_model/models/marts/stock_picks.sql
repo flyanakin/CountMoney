@@ -4,15 +4,15 @@ stock as (
 ),
 
 daily_index as (
-    select * from {{ ref('int_daily_basic_index_lastest') }}
+    select * from {{ ref('int_daily_basic_index_latest') }}
 ),
 
 balance as (
-    select * from {{ ref('int_balance_sheet_lastest') }}
+    select * from {{ ref('int_balance_sheet_latest') }}
 ),
 
 income as (
-    select * from {{ ref('int_income_statement_lastest') }}
+    select * from {{ ref('int_income_statement_latest') }}
 ),
 
 income_pivoted as (
@@ -30,7 +30,7 @@ qi_a_index_defence as (
         {{ current_ratio('total_cur_assets','total_cur_liab') }} as current_ratio,
         {{ receivables_index('accounts_receiv', 'notes_receiv', 'oth_receiv', 'lt_rec', 'total_revenue_ttm') }} as receivables_index,
         net_income_ttm,
-        net_income_exclude_minority as net_income_lastest,
+        net_income_exclude_minority as net_income_latest,
         round((total_revenue - total_revenue_last_year)) as growth_total_revenue_yearly,
         round((net_income_exclude_minority - net_income_last_year)) as growth_net_income_yearly
 
@@ -52,7 +52,7 @@ final as (
         qi_a_index_defence.current_ratio,
         qi_a_index_defence.receivables_index,
         qi_a_index_defence.net_income_ttm,
-        qi_a_index_defence.net_income_lastest,
+        qi_a_index_defence.net_income_latest,
         qi_a_index_defence.growth_total_revenue_yearly,
         qi_a_index_defence.growth_net_income_yearly,
         daily_index.close,

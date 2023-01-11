@@ -13,11 +13,16 @@ from CountMoney_orchestration.utils import date_trans
 @asset(
     io_manager_key="tushare_pg_replace_io_manager",
     key_prefix="tushare",
-    group_name="staging",
+    group_name="tushare",
     op_tags={"group": "EL"},
     name="tushare_stock_basic",
 )
-def tushare_stock_basic():
+def tushare_stock_basic() -> pd.DataFrame:
+    """
+    tushare股票列表
+    仅获取上市公司，不含退市和暂停上市
+    :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=25
+    """
     pro = ts.pro_api(f"{TUSHARE_TOKEN}")
     data = pro.query('stock_basic', exchange='', list_status='L')
     return data
@@ -26,11 +31,15 @@ def tushare_stock_basic():
 @asset(
     io_manager_key="tushare_pg_replace_io_manager",
     key_prefix="tushare",
-    group_name="staging",
+    group_name="tushare",
     op_tags={"group": "EL"},
     name="tushare_trade_calendar",
 )
-def tushare_trade_calendar():
+def tushare_trade_calendar() -> pd.DataFrame:
+    """
+    股票交易日历
+    :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=26
+    """
     pro = ts.pro_api(f"{TUSHARE_TOKEN}")
     data = pro.query('trade_cal', start_date='20180101', end_date='20221231')
     return data
@@ -39,7 +48,7 @@ def tushare_trade_calendar():
 @asset(
     io_manager_key="tushare_pg_append_io_manager",
     key_prefix="tushare",
-    group_name="staging",
+    group_name="tushare",
     op_tags={"group": "EL"},
     name="tushare_balance_sheet",
     config_schema={
@@ -55,7 +64,7 @@ def tushare_balance_sheet(context) -> pd.DataFrame:
     """
     资产负债表
     :param context:
-    :return:
+    :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=36
     """
     pro = ts.pro_api(f"{TUSHARE_TOKEN}")
     __mode = context.op_config["mode"]
@@ -105,7 +114,7 @@ def tushare_balance_sheet(context) -> pd.DataFrame:
 @asset(
     io_manager_key="tushare_pg_append_io_manager",
     key_prefix="tushare",
-    group_name="staging",
+    group_name="tushare",
     op_tags={"group": "EL"},
     name="tushare_income_statement",
     config_schema={
@@ -121,7 +130,7 @@ def tushare_income_statement(context) -> pd.DataFrame:
     """
     利润表（单季）
     :param context:
-    :return:
+    :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=33
     """
     pro = ts.pro_api(f"{TUSHARE_TOKEN}")
     __mode = context.op_config["mode"]
@@ -171,7 +180,7 @@ def tushare_income_statement(context) -> pd.DataFrame:
 @asset(
     io_manager_key="tushare_pg_append_io_manager",
     key_prefix="tushare",
-    group_name="staging",
+    group_name="tushare",
     op_tags={"group": "EL"},
     name="tushare_daily_basic_index",
 )
@@ -179,7 +188,7 @@ def tushare_daily_basic_index() -> pd.DataFrame:
     """
     每日PE等基本指标数据
     :param context:
-    :return:
+    :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=32
     """
     pro = ts.pro_api(f"{TUSHARE_TOKEN}")
     today = date.strftime(date.today(), "%Y%m%d")

@@ -30,7 +30,7 @@ quarter_ordered as (
     from deduplicated
 ),
 
-lastest_4_quarter as (
+last_4_quarter as (
     --取过去4季财报
     select * from quarter_ordered
     where order_num in (1,2,3,4)
@@ -60,7 +60,7 @@ ttm as (
         stock_code,
         round(sum(total_revenue)) as total_revenue,
         round(sum(net_income_exclude_minority)) as net_income_exclude_minority
-    from lastest_4_quarter
+    from last_4_quarter
     group by stock_code
 ),
 
