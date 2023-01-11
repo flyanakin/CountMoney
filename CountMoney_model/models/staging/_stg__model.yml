@@ -4,23 +4,223 @@ models:
   - name: stg_tushare_balance_sheet
     description: 清洗层资产负债表
     columns:
-      - name: ts_code
-        description: tushare股票代码
+      - name: statement_id
+        description: 报告的唯一id，md5生成（ts_code + f_ann_date + end_date + update_flag）
+
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: ann_date
+        description: 公告日期
+
+      - name: f_ann_date
+        description: 实际公告日期
+
+      - name: end_date
+        description: 报告期，如"20221231"表示2022年年报
+
+      - name: company_type
+        description: 公司类型(一般工商业\银行\保险\证券)
+
+      - name: report_type
+        description: >
+          合并报表	          上市公司最新报表（默认）
+          单季合并	          单一季度的合并报表
+          调整单季合并表	      调整后的单季合并报表（如果有）
+          调整合并报表	      本年度公布上年同期的财务报表数据，报告期为上年度
+          调整前合并报表	      数据发生变更，将原数据进行保留，即调整前的原数据
+          母公司报表	          该公司母公司的财务报表数据
+          母公司单季表	      母公司的单季度表
+          母公司调整单季表	  母公司调整后的单季表
+          母公司调整表	      该公司母公司的本年度公布上年同期的财务报表数据
+          母公司调整前报表	  母公司调整之前的原始财务报表数据
+          母公司调整前合并报表   母公司调整之前合并报表原数据
+          母公司调整前报表	  母公司报表发生变更前保留的原数据
+
+      - name: statement_period
+        description: 报告类型
+
+      - name: accounts_receiv
+        description: 应收帐款
+
+      - name: notes_receiv
+        description: 应收票据
+
+      - name: oth_receiv
+        description: 其他应收
+
+      - name: lt_rec
+        description: 长期应收
+
+      - name: total_cur_assets
+        description: 流动资产合计
+
+      - name: total_cur_liab
+        description: 流动负债合计
+
+      - name: goodwill
+        description: 商誉
+
+      - name: r_and_d
+        description: 研发支出
+
+      - name: intan_assets
+        description: 无形资产
+
+      - name: total_hldr_eqy_exc_min_int
+        description: 净资产
+
+      - name: oth_eqt_tools_p_shr
+        description: 优先股
+
+      - name: oth_eqt_tools
+        description: 其他权益工具
+
+      - name: lt_borr
+        description: 长期借款
+
+      - name: bond_payable
+        description: 应付债券
+
+      - name: update_flag
+        description: 更新标志，1为已更新，0为未更新
+
+      - name: created_at
+        description: 数据入库时间，时间戳
+
 
   - name: stg_tushare_income_statement
     description: 清洗层利润表（单季）
     columns:
-      - name: ts_code
-        description: tushare股票代码
+      - name: statement_id
+        description: 报告的唯一id，md5生成（ts_code + f_ann_date + end_date + update_flag）
+
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: ann_date
+        description: 公告日期
+
+      - name: f_ann_date
+        description: 实际公告日期
+
+      - name: end_date
+        description: 报告期，如"20221231"表示2022年年报
+
+      - name: company_type
+        description: 公司类型(一般工商业\银行\保险\证券)
+
+      - name: report_type
+        description: >
+          合并报表	          上市公司最新报表（默认）
+          单季合并	          单一季度的合并报表
+          调整单季合并表	      调整后的单季合并报表（如果有）
+          调整合并报表	      本年度公布上年同期的财务报表数据，报告期为上年度
+          调整前合并报表	      数据发生变更，将原数据进行保留，即调整前的原数据
+          母公司报表	          该公司母公司的财务报表数据
+          母公司单季表	      母公司的单季度表
+          母公司调整单季表	  母公司调整后的单季表
+          母公司调整表	      该公司母公司的本年度公布上年同期的财务报表数据
+          母公司调整前报表	  母公司调整之前的原始财务报表数据
+          母公司调整前合并报表   母公司调整之前合并报表原数据
+          母公司调整前报表	  母公司报表发生变更前保留的原数据
+
+      - name: statement_period
+        description: 报告类型
+
+      - name: total_revenue
+        description: 总营收
+
+      - name: net_income_exclude_minority
+        description: 净利润(不含少数股东损益)
+
+      - name: update_flag
+        description: 更新标志
+
+      - name: created_at
+        description: 数据入库时间，时间戳
+
 
   - name: stg_tushare_daily_basic_index
     description: 清洗层每日基础指标
     columns:
-      - name: ts_code
-        description: tushare股票代码
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: trade_date
+        description: 交易日期
+
+      - name: close
+        description: 当日收盘价
+
+      - name: turnover_rate
+        description: 换手率（%）
+
+      - name: turnover_rate_free
+        description: 换手率（自由流通股）
+
+      - name: volume_ratio
+        description: 量比
+
+      - name: pe
+        description: 市盈率（总市值/净利润， 亏损的PE为空）
+
+      - name: pe_ttm
+        description: 市盈率（TTM，亏损的PE为空）
+
+      - name: pb
+        description: 市净率（总市值/净资产）
+
+      - name: ps
+        description: 市销率
+
+      - name: ps_ttm
+        description: 市销率（TTM）
+
+      - name: dividend_ratio
+        description: 股息率（%）
+
+      - name: dividend_ratio_ttm
+        description: 股息率（TTM）（%）
+
+      - name: total_share
+        description: 总股本
+
+      - name: float_share
+        description: 流通股本
+
+      - name: free_share
+        description: 自由流通股本
+
+      - name: total_market_capitalization
+        description: 总市值
+
+      - name: circulating_market_capitalization
+        description: 流通市值
+
+      - name: created_at
+        description: 数据入库时间，时间戳
 
   - name: stg_tushare_stock_basic
     description: 清洗层股票基础数据
     columns:
-      - name: ts_code
-        description: tushare股票代码
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: stock_code_normal
+        description: 股票代码，常见的格式，如"000001"
+
+      - name: stock_name
+        description: 股票名称
+
+      - name: regisered_region
+        description: 注册地区
+
+      - name: industry
+        description: 所属行业
+
+      - name: market
+        description: 所属板块，市场类型（主板/创业板/科创板/CDR/北交所）
+
+      - name: list_date
+        description: 上市日期
