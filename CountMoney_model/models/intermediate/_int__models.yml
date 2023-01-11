@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: int_balance_sheet_lastest
+  - name: int_balance_sheet_latest
     description: 股票最新的资产负债表
     columns:
       - name: statement_id
@@ -88,7 +88,7 @@ models:
       - name: created_at
         description: 数据入库时间，时间戳
 
-  - name: int_income_statement_lastest
+  - name: int_income_statement_latest
     description: 最新的利润表
     columns:
       - name: statement_id
@@ -160,7 +160,7 @@ models:
       - name: total_revenue_last_year
         description: 去年同期季度的营收
 
-  - name: int_daily_basic_index_lastest
+  - name: int_daily_basic_index_latest
     description: 最新的每日指标
     columns:
       - name: stock_code

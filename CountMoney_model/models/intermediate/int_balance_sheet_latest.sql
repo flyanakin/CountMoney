@@ -17,7 +17,7 @@ deduplicated as (
     where t.rn1 = 1
 ),
 
-lastest as (
+latest as (
     select * from (
         select
             *,
@@ -32,6 +32,6 @@ lastest as (
 final as (
     select
         *
-    from lastest
+    from latest
 )
 select * from final
