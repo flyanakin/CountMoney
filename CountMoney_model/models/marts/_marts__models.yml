@@ -4,5 +4,67 @@ models:
   - name: stock_picks
     description: 综合财务数据等，优选股票
     columns:
-      - name: ts_code
-        description: tushare股票代码
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: stock_name
+        description: 股票名称
+
+      - name: industry
+        description: 所属行业
+
+      - name: end_date
+        description: 报告期，如"20221231"表示2022年年报
+
+      - name: insolvent_index
+        description: |
+           ### 资不抵债风险指数
+           * 推荐值：>0.75
+           * 计算公式：(流动资产-流动负债) / (长期借款+应付债券）
+
+      - name: impairment_goodwill_index
+        description: |
+          ### 商誉减值风险指数
+          * 推荐值：<0.25
+          * 计算公式：(商誉+开发支出+无形资产) / (净资产-优先股-永续债）
+
+      - name: current_ratio
+        description: |
+          ### 流动比率
+          * 推荐值：<1.5
+          * 计算公式：流动资产 / 流动负债
+
+      - name: net_income_ttm
+        description: |
+          ### 净利润ttm
+          * 推荐值：>0
+
+      - name: net_income_latest
+        description: |
+          ### 最新一季净利润
+          * 推荐值：>0
+
+      - name: growth_total_revenue_yearly
+        description: |
+          ### 营收同比增长值
+          * 推荐值：>0
+
+      - name: growth_net_income_yearly
+        description: |
+          ### 净利润同比增长值
+          * 推荐值：>0
+
+      - name: close
+        description: 当日收盘价
+
+      - name: pe_ttm
+        description: 市盈率（TTM，亏损的PE为空）
+
+      - name: dividend_ratio
+        description: 股息率（%）
+
+      - name: dividend_ratio_ttm
+        description: 股息率（TTM）（%）
+
+      - name: total_market_capitalization
+        description: 总市值
