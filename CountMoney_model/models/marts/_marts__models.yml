@@ -44,15 +44,35 @@ models:
           ### 最新一季净利润
           * 推荐值：>0
 
-      - name: growth_total_revenue_yearly
+      - name: total_revenue_yoy
         description: |
           ### 营收同比增长值
           * 推荐值：>0
 
-      - name: growth_net_income_yearly
+      - name: net_income_yoy
         description: |
           ### 净利润同比增长值
           * 推荐值：>0
+
+      - name: total_revenue_yoy_ratio
+        description: |
+          ### 营收同比增长率
+          * 推荐值：>0.2
+
+      - name: net_income_yoy_ratio
+        description: |
+          ### 净利润同比增长率
+          * 推荐值：>0.5
+
+      - name: peg_by_net_income
+        description: |
+          ### 根据净利润计算peg
+          * 推荐值：0<peg<1
+
+      - name: peg_by_revenue
+        description: |
+          ### 根据营收计算peg
+          * 推荐值：0<peg<1
 
       - name: close
         description: 当日收盘价
