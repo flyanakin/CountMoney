@@ -10,6 +10,7 @@ TUSHARE_TOKEN = os.getenv('TUSHARE_TOKEN')
 WAREHOUSE_HOSTS = os.getenv('WAREHOUSE_HOSTS')
 WAREHOUSE_USER = os.getenv('WAREHOUSE_USER')
 WAREHOUSE_SECRET = os.getenv('WAREHOUSE_SECRET')
+WECOM_BOT_TOKEN_KIKYO = os.getenv('WECOM_BOT_TOKEN_KIKYO')
 
 
 tushare_append_io_manager = pandas_sql_append_io_manager.configured(

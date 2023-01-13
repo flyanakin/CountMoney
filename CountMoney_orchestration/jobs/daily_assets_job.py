@@ -27,7 +27,7 @@ daily_config = {
 
 
 daily_assets_job = define_asset_job(
-    name="daily_asset_job",
+    name="daily_assets_job",
     selection=AssetSelection.keys(["stock_picks"]).upstream(),
     config=daily_config,
 )
