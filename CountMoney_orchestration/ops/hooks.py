@@ -10,7 +10,7 @@ wecom_bot_token = WECOM_BOT_TOKEN_KIKYO
 
 @success_hook
 def wecom_bot_message_on_success(context: HookContext):
-    message = f"{context.job_name} finished successfully，赶紧去数仓数钱吧"
+    message = f"{context.op.name} finished successfully"
     context.log.info(message)
     __alert(message)
 
