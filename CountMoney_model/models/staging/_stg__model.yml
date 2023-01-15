@@ -222,3 +222,21 @@ models:
 
       - name: list_date
         description: 上市日期
+
+  - name: stg_airtable_portfolio
+    description: 清洗层持仓数据
+    columns:
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: stock_name
+        description: 股票名称
+
+      - name: position
+        description: 持仓数量，单位：股
+
+      - name: cost
+        description: 成本价，前复权
+
+      - name: sub_portfolio
+        description: 组合名称，一只股票只可能出现在一个组合

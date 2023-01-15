@@ -22,12 +22,20 @@ daily_config = {
                 "end_date": "",
             }
         },
+        "tushare__tushare_daily_basic_index": {
+            "config": {
+                "mode": "daily",
+                "ts_code": "",
+                "start_date": "",
+                "end_date": "",
+            }
+        },
     }
 }
 
 
 daily_assets_job = define_asset_job(
     name="daily_assets_job",
-    selection=AssetSelection.keys(["stock_picks"]).upstream(),
+    selection=AssetSelection.groups("marts").upstream(),
     config=daily_config,
 )

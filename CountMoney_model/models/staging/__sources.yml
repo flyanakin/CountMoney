@@ -34,3 +34,13 @@ sources:
         columns:
           - name: ts_code
             description: tushare股票代码
+
+  - name: airtable # this is the source_name
+    database: warehouse
+    schema: datasources
+    tables:
+      - name: airtable_portfolio
+        description: 持仓数据
+        columns:
+          - name: stock_code
+            description: tushare股票代码
