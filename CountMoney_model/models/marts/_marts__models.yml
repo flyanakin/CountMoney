@@ -88,3 +88,33 @@ models:
 
       - name: total_market_capitalization
         description: 总市值
+
+  - name: portfolio
+    description: 最新持仓明细数据
+    columns:
+      - name: stock_code
+        description: 股票代码
+
+      - name: stock_name
+        description: 股票名称
+
+      - name: position
+        description: 持仓数量，单位：股
+
+      - name: cost
+        description: 成本价，前复权
+
+      - name: last
+        description: 最新收盘价，前复权
+
+      - name: market_capitalization
+        description: 持仓市值
+
+      - name: profit
+        description: 持仓收益
+
+      - name: profit_ratio
+        description: 持仓收益率
+
+      - name: sub_portfolio
+        description: 组合名称，一只股票只可能出现在一个组合

@@ -7,7 +7,7 @@ from time import time
 
 @asset(
     io_manager_key="warehouse_pg_append_io_manager",
-    key_prefix="airtable",
+    key_prefix="manual_update",
     group_name="airtable",
     op_tags={"group": "EL"},
     name="airtable_portfolio",
