@@ -14,6 +14,11 @@ WECOM_BOT_TOKEN_KIKYO = os.getenv('WECOM_BOT_TOKEN_KIKYO')
 AIRTABLE_API_TOKEN = os.environ['AIRTABLE_API_TOKEN']
 AIRTABLE_BASE_ID = os.environ['AIRTABLE_BASE_ID']
 
+##邮箱相关
+MAIL_USER = os.environ['MAIL_USER']
+MAIL_PASS = os.environ['MAIL_PASS']
+MAIL_RECEIVER = os.environ['MAIL_RECEIVER']
+
 tushare_append_io_manager = pandas_sql_append_io_manager.configured(
     {
         "warehouse_hosts": os.environ["WAREHOUSE_HOSTS"],

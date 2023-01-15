@@ -8,10 +8,9 @@ from dagster import (
 import os
 from dagster_dbt import load_assets_from_dbt_project
 from CountMoney_orchestration.assets import tushare, airtable
-from CountMoney_orchestration.jobs.load_basic_info import load_basic_info
 from CountMoney_orchestration.jobs.demo import demo
-from CountMoney_orchestration.jobs.load_history_data import load_history_data
 from CountMoney_orchestration.jobs.daily_assets_job import daily_assets_job
+from CountMoney_orchestration.jobs.daily_push_job import daily_push_job
 from CountMoney_orchestration.resources import (
     resources_prod,
     dbt_resource_def,
@@ -55,7 +54,7 @@ def CountMoney_orchestration():
 
     all_assets = [*update_daily_assets, *airtable_assets]
 
-    all_jobs = [demo, daily_assets_job_resolved]
+    all_jobs = [demo, daily_assets_job_resolved, daily_push_job]
 
     all_schedules = [
         ScheduleDefinition(
