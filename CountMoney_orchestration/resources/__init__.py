@@ -11,7 +11,8 @@ WAREHOUSE_HOSTS = os.getenv('WAREHOUSE_HOSTS')
 WAREHOUSE_USER = os.getenv('WAREHOUSE_USER')
 WAREHOUSE_SECRET = os.getenv('WAREHOUSE_SECRET')
 WECOM_BOT_TOKEN_KIKYO = os.getenv('WECOM_BOT_TOKEN_KIKYO')
-
+AIRTABLE_API_TOKEN = os.environ['AIRTABLE_API_TOKEN']
+AIRTABLE_BASE_ID = os.environ['AIRTABLE_BASE_ID']
 
 tushare_append_io_manager = pandas_sql_append_io_manager.configured(
     {
@@ -24,6 +25,16 @@ tushare_append_io_manager = pandas_sql_append_io_manager.configured(
 )
 
 tushare_replace_io_manager = pandas_sql_replace_io_manager.configured(
+    {
+        "warehouse_hosts": os.environ["WAREHOUSE_HOSTS"],
+        "warehouse_user": os.environ["WAREHOUSE_USER"],
+        "warehouse_secret": os.environ["WAREHOUSE_SECRET"],
+        "destination_db": "warehouse",
+        "destination_schema": "datasources",
+    }
+)
+
+warehouse_append_io_manager = pandas_sql_append_io_manager.configured(
     {
         "warehouse_hosts": os.environ["WAREHOUSE_HOSTS"],
         "warehouse_user": os.environ["WAREHOUSE_USER"],
@@ -51,5 +62,6 @@ dbt_resource_def = {
 resources_prod = {
     "tushare_pg_append_io_manager": tushare_append_io_manager,
     "tushare_pg_replace_io_manager": tushare_replace_io_manager,
+    "warehouse_pg_append_io_manager": warehouse_append_io_manager,
     "dbt": dbt_resource,
 }
