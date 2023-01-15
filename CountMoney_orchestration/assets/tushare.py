@@ -183,18 +183,39 @@ def tushare_income_statement(context) -> pd.DataFrame:
     group_name="tushare",
     op_tags={"group": "EL"},
     name="tushare_daily_basic_index",
+    config_schema={
+        "mode": str,
+        "ts_code": str,
+        "start_date": str,
+        "end_date": str,
+    },
 )
-def tushare_daily_basic_index() -> pd.DataFrame:
+def tushare_daily_basic_index(context) -> pd.DataFrame:
     """
     每日PE等基本指标数据
     :param context:
     :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=32
     """
     pro = ts.pro_api(f"{TUSHARE_TOKEN}")
-    today = date.strftime(date.today(), "%Y%m%d")
-    calendar = pro.query('trade_cal', start_date='20221201', end_date=today)
-    last_trade_date = (calendar.loc[calendar['is_open'] == 1]).iloc[-1]['cal_date']
-    data = pro.query('daily_basic', trade_date=last_trade_date)
+    __mode = context.op_config["mode"]
+    __ts_code = context.op_config["ts_code"]
+    __start_date = context.op_config["start_date"]
+    __end_date = context.op_config["end_date"]
+
+    if __mode == 'daily':
+        today = date.strftime(date.today(), "%Y%m%d")
+        data = pro.query('daily_basic', trade_date=today)
+    elif __mode == 'para':
+        ##开始时间和结束时间都是必填
+        data = pro.query(
+            'daily_basic',
+            ts_code=__ts_code,
+            start_date=__start_date,
+            end_date=__end_date,
+        )
+    else:
+        ValueError("Unsupported value: " + str(context.op_config["mode"]))
+
     created_at = round(time())
     data['created_at'] = created_at
     return data

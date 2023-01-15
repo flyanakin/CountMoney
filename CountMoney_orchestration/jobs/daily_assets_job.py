@@ -22,6 +22,14 @@ daily_config = {
                 "end_date": "",
             }
         },
+        "tushare__tushare_daily_basic_index": {
+            "config": {
+                "mode": "daily",
+                "ts_code": "",
+                "start_date": "",
+                "end_date": "",
+            }
+        },
     }
 }
 
