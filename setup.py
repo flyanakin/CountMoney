@@ -13,6 +13,7 @@ setup(
         "sqlalchemy==1.4.32",
         "tushare",
         "psycopg2-binary==2.9.3",
+        "pyairtable==1.4.0",
     ],
     extras_require={"dev": ["dagit", "pytest"]},
 )
