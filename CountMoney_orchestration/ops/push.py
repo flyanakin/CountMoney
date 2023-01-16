@@ -10,27 +10,7 @@ from CountMoney_orchestration.resources import (
 )
 
 wecom_bot_token = WECOM_BOT_TOKEN_MIKOTO
-
-
-@op()
-def message_generate():
-    message = """
-    组合表现：
-    · 双增组合持仓收益：10%
-    · 低估值蓝筹持仓收益：20%
-    
-    止盈提醒：
-    · 二段阶梯（56%->43.75%）：宁德时代（43.75%）
-    · 三段阶梯（95%->79.68%）: 东方电缆（79.68%）
-    · 四段阶梯（144%->124.6%）: 光大证券（124.6%）
-    · 换手率止盈：金雷股份（120亿市值，今日换手率20%）
-    
-    止损提醒：
-    · 组合止损：双增组合（-8%）
-    · 组合剪枝：隆基股份（双增组合，-15%）
-    · 个股止损：阳光电源（-8%）
-    """
-    return message
+wecom_queue = [WECOM_BOT_TOKEN_KIKYO,WECOM_BOT_TOKEN_MIKOTO]
 
 
 @op()
@@ -79,3 +59,15 @@ def send_wecom_bot(message: str):
         headers=headers,
         data=json.dumps(post_data),
     )
+
+@op()
+def send_wecom_bot_queue(context,message: str):
+    for token in wecom_queue:
+        hook_url = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={token}"
+        post_data = {"msgtype": "text", "text": {"content": message}}
+        headers = {"Content-Type": "application/json"}
+        requests.post(
+            url=hook_url,
+            headers=headers,
+            data=json.dumps(post_data),
+        )

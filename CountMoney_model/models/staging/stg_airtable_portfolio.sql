@@ -24,6 +24,7 @@ formatted as (
         round({{ number_field }}::numeric, 2) as {{ number_field }},
         {%- endfor %}
         sub_portfolio,
+        order_date,
         created_at
     from portfolio
 ),

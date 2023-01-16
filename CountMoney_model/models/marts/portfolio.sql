@@ -18,7 +18,8 @@ portfolio_full as (
         portfolio.position,
         portfolio.cost,
         daily_index.close,
-        portfolio.sub_portfolio
+        portfolio.sub_portfolio,
+        portfolio.order_date
     from portfolio
     left join daily_index
     on portfolio.stock_code = daily_index.stock_code
@@ -46,7 +47,8 @@ final as (
        metrics.profit                as profit,
        metrics.profit_ratio          as profit_ratio,
        portfolio_full.sub_portfolio  as sub_portfolio,
-       stock.industry                as industry
+       stock.industry                as industry,
+       portfolio_full.order_date     as order_date
     from portfolio_full
     left join metrics
     on portfolio_full.stock_code = metrics.stock_code
