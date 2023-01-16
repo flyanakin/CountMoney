@@ -27,8 +27,9 @@ portfolio_full as (
 metrics as (
     select
         stock_code,
+        round((cost*position), 2) as total_cost,
         round((close - cost)*position, 2) as profit,
-        round((close - cost) / cost, 4) as profit_ration,
+        round((close - cost) / cost, 4) as profit_ratio,
         round((close * position),2) as market_capitalization
     from portfolio_full
 ),
@@ -40,9 +41,10 @@ final as (
        portfolio_full.position       as position,
        portfolio_full.cost           as cost,
        portfolio_full.close          as last,
+       metrics.total_cost            as total_cost,
        metrics.market_capitalization as market_capitalization,
        metrics.profit                as profit,
-       metrics.profit_ration         as profit_ration,
+       metrics.profit_ratio          as profit_ratio,
        portfolio_full.sub_portfolio  as sub_portfolio,
        stock.industry                as industry
     from portfolio_full
