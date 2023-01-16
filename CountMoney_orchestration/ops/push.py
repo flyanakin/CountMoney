@@ -4,9 +4,12 @@ from dagster import op
 import smtplib
 from email.mime.text import MIMEText
 from CountMoney_orchestration.resources import MAIL_USER, MAIL_PASS, MAIL_RECEIVER
-from CountMoney_orchestration.resources import WECOM_BOT_TOKEN_KIKYO
+from CountMoney_orchestration.resources import (
+    WECOM_BOT_TOKEN_KIKYO,
+    WECOM_BOT_TOKEN_MIKOTO,
+)
 
-wecom_bot_token = WECOM_BOT_TOKEN_KIKYO
+wecom_bot_token = WECOM_BOT_TOKEN_MIKOTO
 
 
 @op()
@@ -68,7 +71,7 @@ def send_email(email_context: str) -> None:
 @op()
 def send_wecom_bot(message: str):
     hook_url = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={wecom_bot_token}"
-    post_data = {"msgtype": "markdown", "markdown": {"content": message}}
+    post_data = {"msgtype": "text", "text": {"content": message}}
 
     headers = {"Content-Type": "application/json"}
     requests.post(

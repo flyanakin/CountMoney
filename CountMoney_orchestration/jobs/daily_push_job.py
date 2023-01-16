@@ -7,7 +7,10 @@ from dagster import (
     SensorEvaluationContext,
 )
 from CountMoney_orchestration.ops.analysis import read_table, portfolio_analysis
-from CountMoney_orchestration.ops.push import send_email, send_wecom_bot
+from CountMoney_orchestration.ops.push import (
+    send_email,
+    send_wecom_bot,
+)
 
 default_config = {
     "ops": {
@@ -25,7 +28,6 @@ default_config = {
 @graph()
 def push_analysis_result():
     message = portfolio_analysis(read_table())
-    send_email(message)
     send_wecom_bot(message)
 
 
