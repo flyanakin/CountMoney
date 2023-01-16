@@ -10,7 +10,10 @@ from dagster_dbt import load_assets_from_dbt_project
 from CountMoney_orchestration.assets import tushare, airtable
 from CountMoney_orchestration.jobs.demo import demo
 from CountMoney_orchestration.jobs.daily_assets_job import daily_assets_job
-from CountMoney_orchestration.jobs.daily_push_job import daily_push_job
+from CountMoney_orchestration.jobs.daily_push_job import (
+    daily_push_job,
+)
+from CountMoney_orchestration.sensors.warehouse_sensors import portfolio_update_sensor
 from CountMoney_orchestration.resources import (
     resources_prod,
     dbt_resource_def,
@@ -56,6 +59,8 @@ def CountMoney_orchestration():
 
     all_jobs = [demo, daily_assets_job_resolved, daily_push_job]
 
+    all_sensors = [portfolio_update_sensor]
+
     all_schedules = [
         ScheduleDefinition(
             cron_schedule="0 18 * * *",
@@ -66,5 +71,5 @@ def CountMoney_orchestration():
         ),
     ]
 
-    definitions = all_assets + all_jobs + all_schedules
+    definitions = all_assets + all_jobs + all_sensors + all_schedules
     return definitions
