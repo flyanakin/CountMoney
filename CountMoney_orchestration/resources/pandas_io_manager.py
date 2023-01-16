@@ -1,6 +1,14 @@
 import pandas as pd
 from sqlalchemy import create_engine
-from dagster import IOManager, io_manager, Field, OutputContext, AssetKey, StringSource
+from dagster import (
+    IOManager,
+    io_manager,
+    Field,
+    OutputContext,
+    AssetKey,
+    StringSource,
+    input_manager,
+)
 
 
 class PandasSqlIOManager(IOManager):

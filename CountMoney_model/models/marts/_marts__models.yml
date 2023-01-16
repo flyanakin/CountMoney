@@ -107,6 +107,9 @@ models:
       - name: last
         description: 最新收盘价，前复权
 
+      - name: total_cost
+        description: 个股买入成本
+
       - name: market_capitalization
         description: 持仓市值
 

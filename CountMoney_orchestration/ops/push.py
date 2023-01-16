@@ -1,12 +1,12 @@
-import pandas as pd
+import json
+import requests
 from dagster import op
 import smtplib
 from email.mime.text import MIMEText
-from CountMoney_orchestration.resources import (
-    MAIL_USER,
-    MAIL_PASS,
-    MAIL_RECEIVER,
-)
+from CountMoney_orchestration.resources import MAIL_USER, MAIL_PASS, MAIL_RECEIVER
+from CountMoney_orchestration.resources import WECOM_BOT_TOKEN_KIKYO
+
+wecom_bot_token = WECOM_BOT_TOKEN_KIKYO
 
 
 @op()
@@ -63,3 +63,16 @@ def send_email(email_context: str) -> None:
         print('success')
     except smtplib.SMTPException as e:
         print('error', e)  # 打印错误
+
+
+@op()
+def send_wecom_bot(message: str):
+    hook_url = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={wecom_bot_token}"
+    post_data = {"msgtype": "markdown", "markdown": {"content": message}}
+
+    headers = {"Content-Type": "application/json"}
+    requests.post(
+        url=hook_url,
+        headers=headers,
+        data=json.dumps(post_data),
+    )
