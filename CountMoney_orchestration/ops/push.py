@@ -2,11 +2,7 @@ import pandas as pd
 from dagster import op
 import smtplib
 from email.mime.text import MIMEText
-from CountMoney_orchestration.resources import (
-    MAIL_USER,
-    MAIL_PASS,
-    MAIL_RECEIVER,
-)
+from CountMoney_orchestration.resources import MAIL_USER, MAIL_PASS, MAIL_RECEIVER
 
 
 @op()
