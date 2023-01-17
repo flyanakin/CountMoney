@@ -217,3 +217,27 @@ models:
 
       - name: created_at
         description: 数据入库时间，时间戳
+
+  - name: int_portfolio
+    description: 持仓数据融合表
+    columns:
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: stock_name
+        description: 股票名称
+
+      - name: position
+        description: 持仓数量，单位：股
+
+      - name: cost
+        description: 成本价，前复权
+
+      - name: close
+        description: 最新收盘价，前复权
+
+      - name: sub_portfolio
+        description: 组合名称，一只股票只可能出现在一个组合
+
+      - name: industry
+        description: 所属行业

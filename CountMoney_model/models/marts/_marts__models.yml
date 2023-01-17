@@ -121,3 +121,6 @@ models:
 
       - name: sub_portfolio
         description: 组合名称，一只股票只可能出现在一个组合
+
+      - name: industry
+        description: 所属行业

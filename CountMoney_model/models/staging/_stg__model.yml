@@ -240,3 +240,9 @@ models:
 
       - name: sub_portfolio
         description: 组合名称，一只股票只可能出现在一个组合
+
+      - name: order_date
+        description: 买入日期
+
+      - name: created_at
+        description: 数据入库时间
