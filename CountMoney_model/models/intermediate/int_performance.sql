@@ -107,7 +107,7 @@ final as (
     left join income_last_year using(stock_code)
     left join income_sum_3_quarter using(stock_code)
     left join performance_quarterly using(stock_code)
-    left join basic using(stock_code)
+    inner join basic using(stock_code)
     left join daily_index using(stock_code)
 )
 
