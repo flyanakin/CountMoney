@@ -276,7 +276,7 @@ def tushare_forecast(context) -> pd.DataFrame:
 )
 def tushare_express(context) -> pd.DataFrame:
     """
-    业绩预告
+    业绩快报
     :param context:
     :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=45
     """

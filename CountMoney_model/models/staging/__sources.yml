@@ -35,6 +35,18 @@ sources:
           - name: ts_code
             description: tushare股票代码
 
+      - name: tushare_forecast
+        description: 业绩预告
+        columns:
+          - name: ts_code
+            description: tushare股票代码
+
+      - name: tushare_express
+        description: 业绩快报
+        columns:
+          - name: ts_code
+            description: tushare股票代码
+
   - name: airtable # this is the source_name
     database: warehouse
     schema: datasources
