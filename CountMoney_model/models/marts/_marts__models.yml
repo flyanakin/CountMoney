@@ -124,3 +124,54 @@ models:
 
       - name: industry
         description: 所属行业
+
+  - name: performance
+    description: 业绩预告
+    columns:
+      - name: stock_code
+        description: 股票代码
+
+      - name: stock_name
+        description: 股票名称
+
+      - name: ann_date
+        description: 公告日期
+
+      - name: end_date
+        description: 报告期，如"20221231"表示2022年年报
+
+      - name: trend
+        description: 预告业绩趋势，预增/预减/扭亏/首亏/续亏/续盈/略增/略减
+
+      - name: growth_net_income_quarterly_ratio_min
+        description: 单季同比净利润增长率下限
+
+      - name: growth_net_income_quarterly_ratio_max
+        description: 单季同比净利润增长率下限
+
+      - name: net_income_ttm_min
+        description: 净利润ttm下限
+
+      - name: net_income_ttm_max
+        description: 净利润ttm下限
+
+      - name: pe_ttm_min
+        description: pe_ttm下限
+
+      - name: pe_ttm_max
+        description: pe_ttm下限
+
+      - name: peg_min
+        description: peg_min下限
+
+      - name: peg_max
+        description: peg_max下限
+
+      - name: industry
+        description: 所属行业
+
+      - name: summary
+        description: 业绩预告摘要
+
+      - name: change_reason
+        description: 业绩变动原因

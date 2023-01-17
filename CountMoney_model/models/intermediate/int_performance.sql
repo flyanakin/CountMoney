@@ -101,7 +101,7 @@ final as (
         income_last_year.net_income                     as net_income_last_year_quarterly,
         daily_index.total_market_capitalization         as total_market_capitalization,
         basic.industry                                  as industry,
-        performance.summary                              as summary,
+        performance.summary                             as summary,
         performance.change_reason                       as change_reason
     from performance
     left join income_last_year using(stock_code)

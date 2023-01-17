@@ -287,6 +287,12 @@ models:
       - name: industry
         description: 所属行业
 
+      - name: summary
+        description: 业绩预告摘要
+
+      - name: change_reason
+        description: 业绩变动原因
+
 
   - name: int_income_past_year
     description: 最近一年的合并利润表
