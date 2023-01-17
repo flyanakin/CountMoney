@@ -53,7 +53,7 @@ def CountMoney_orchestration():
     ##resolve成JobDefinition
     daily_assets_job_resolved = daily_assets_job.resolve(
         assets=update_daily_assets, source_assets=[]
-    ).with_hooks(hook_defs={wecom_bot_message_on_success, wecom_bot_message_on_failure})
+    ).with_hooks(hook_defs={wecom_bot_message_on_failure})
 
     all_assets = [*update_daily_assets, *airtable_assets]
 
