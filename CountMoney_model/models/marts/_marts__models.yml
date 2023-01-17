@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: stock_picks
-    description: 综合财务数据等，优选股票
+    description: 股票综合财务估值数据
     columns:
       - name: stock_code
         description: 股票代码，tushare格式，如"000001.SZ"
