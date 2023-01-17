@@ -1,28 +1,6 @@
 with
-stock as (
-    select * from {{ ref('stg_tushare_stock_basic') }}
-),
-
 portfolio as (
-    select * from {{ ref('stg_airtable_portfolio') }}
-),
-
-daily_index as (
-    select * from {{ ref('int_daily_basic_index_latest') }}
-),
-
-portfolio_full as (
-    select
-        portfolio.stock_code,
-        portfolio.stock_name,
-        portfolio.position,
-        portfolio.cost,
-        daily_index.close,
-        portfolio.sub_portfolio,
-        portfolio.order_date
-    from portfolio
-    left join daily_index
-    on portfolio.stock_code = daily_index.stock_code
+    select * from {{ ref('int_portfolio') }}
 ),
 
 metrics as (
@@ -32,28 +10,26 @@ metrics as (
         round((close - cost)*position, 2) as profit,
         round((close - cost) / cost, 4) as profit_ratio,
         round((close * position),2) as market_capitalization
-    from portfolio_full
+    from portfolio
 ),
 
 final as (
     select
-       portfolio_full.stock_code     as stock_code,
-       portfolio_full.stock_name     as stock_name,
-       portfolio_full.position       as position,
-       portfolio_full.cost           as cost,
-       portfolio_full.close          as last,
+       portfolio.stock_code          as stock_code,
+       portfolio.stock_name          as stock_name,
+       portfolio.position            as position,
+       portfolio.cost                as cost,
+       portfolio.close               as last,
        metrics.total_cost            as total_cost,
        metrics.market_capitalization as market_capitalization,
        metrics.profit                as profit,
        metrics.profit_ratio          as profit_ratio,
-       portfolio_full.sub_portfolio  as sub_portfolio,
-       stock.industry                as industry,
-       portfolio_full.order_date     as order_date
-    from portfolio_full
+       portfolio.sub_portfolio       as sub_portfolio,
+       portfolio.industry            as industry,
+       portfolio.order_date          as order_date
+    from portfolio
     left join metrics
-    on portfolio_full.stock_code = metrics.stock_code
-    left join stock
-    on portfolio_full.stock_code = stock.stock_code
+    on portfolio.stock_code = metrics.stock_code
 )
 
 select * from final
