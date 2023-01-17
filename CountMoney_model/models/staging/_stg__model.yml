@@ -129,6 +129,9 @@ models:
       - name: total_revenue
         description: 总营收
 
+      - name: net_income
+        description: 净利润(含少数股东损益)
+
       - name: net_income_exclude_minority
         description: 净利润(不含少数股东损益)
 
