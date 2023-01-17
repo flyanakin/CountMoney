@@ -1,4 +1,4 @@
-{% set atom_metrics = ["total_revenue","n_income_attr_p"] %}
+{% set atom_metrics = ["total_revenue","n_income","n_income_attr_p"] %}
 
 with import as (
     --输入按created_time去重
@@ -49,6 +49,7 @@ final as (
         report_type,
         statement_period,
         total_revenue,
+        n_income as net_income,
         n_income_attr_p as net_income_exclude_minority,
         update_flag,
         created_at

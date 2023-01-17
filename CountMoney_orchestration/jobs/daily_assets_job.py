@@ -30,6 +30,14 @@ daily_config = {
                 "end_date": "",
             }
         },
+        "tushare__tushare_forecast": {
+            "config": {
+                "mode": "daily",
+                "ts_code": "",
+                "period": "",
+                "ann_date": "",
+            }
+        },
     }
 }
 

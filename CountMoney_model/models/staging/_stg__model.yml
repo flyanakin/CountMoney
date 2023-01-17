@@ -129,6 +129,9 @@ models:
       - name: total_revenue
         description: 总营收
 
+      - name: net_income
+        description: 净利润(含少数股东损益)
+
       - name: net_income_exclude_minority
         description: 净利润(不含少数股东损益)
 
@@ -246,3 +249,79 @@ models:
 
       - name: created_at
         description: 数据入库时间
+
+  - name: stg_tushare_forecast
+    description: 业绩预告清洗表
+    columns:
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: ann_date
+        description: 公告日期
+
+      - name: end_date
+        description: 报告期
+
+      - name: trend
+        description: 预告业绩趋势，预增/预减/扭亏/首亏/续亏/续盈/略增/略减
+
+      - name: net_income_change_min
+        description: 预告净利润变动幅度下限
+
+      - name: net_income_change_max
+        description: 预告净利润变动幅度上限
+
+      - name: net_income_min
+        description: 预告净利润下限，单位：元
+
+      - name: net_income_max
+        description: 预告净利润上限，单位：元
+
+      - name: net_income_stockholder_last_year
+        description: 去年同期归母净利润
+
+      - name: summary
+        description: 业绩预告摘要
+
+      - name: change_reason
+        description: 业绩变动原因
+
+
+  - name: stg_tushare_express
+    description: 业绩快报清洗表
+    columns:
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: ann_date
+        description: 公告日期
+
+      - name: end_date
+        description: 报告期
+
+      - name: revenue
+        description: 营业收入(元)
+
+      - name: operate_profit
+        description: 营业利润(元)
+
+      - name: total_profit
+        description: 利润总额(元)
+
+      - name: net_income
+        description: 净利润(元)
+
+      - name: total_assets
+        description: 预告净利润上限，单位：元
+
+      - name: total_hldr_eqy_exc_min_int
+        description: 股东权益合计(不含少数股东权益)
+
+      - name: diluted_roe
+        description: 净资产收益率(摊薄)(%)
+
+      - name: net_income_yoy
+        description: 去年同期修正后净利润
+
+      - name: perf_summary
+        description: 业绩简要说明

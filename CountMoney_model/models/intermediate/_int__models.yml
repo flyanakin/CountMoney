@@ -241,3 +241,79 @@ models:
 
       - name: industry
         description: 所属行业
+
+  - name: int_performance
+    description: 业绩预告融合表
+    columns:
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: stock_name
+        description: 股票名称
+
+      - name: ann_date
+        description: 公告日期
+
+      - name: end_date
+        description: 报告期，如"20221231"表示2022年年报
+
+      - name: trend
+        description: 预告业绩趋势，预增/预减/扭亏/首亏/续亏/续盈/略增/略减
+
+      - name: net_income_quarterly_min
+        description: 预告单季度净利润下限
+
+      - name: net_income_quarterly_max
+        description: 预告单季度净利润上限
+
+      - name: net_income_min
+        description: 预告净利润下限，单位：元
+
+      - name: net_income_max
+        description: 预告净利润上限，单位：元
+
+      - name: net_income_stockholder_last_year
+        description: 去年同期归母净利润
+
+      - name: net_income_last_3quarter
+        description: 过去3个季度的净利润，用于计算预测净利润ttm
+
+      - name: net_income_last_year_quarterly
+        description: 去年同期单季度净利润
+
+      - name: total_market_capitalization
+        description: 最新总市值
+
+      - name: industry
+        description: 所属行业
+
+      - name: summary
+        description: 业绩预告摘要
+
+      - name: change_reason
+        description: 业绩变动原因
+
+
+  - name: int_income_past_year
+    description: 最近一年的合并利润表
+    columns:
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: year
+        description: 公告年份
+
+      - name: statement_type
+        description: 报告类型，一季报/中报/三季报/年报
+
+      - name: net_income
+        description: 净利润(含少数股东损益)
+
+      - name: net_income_exclude_minority
+        description: 净利润(不含少数股东损益)
+
+      - name: total_revenue
+        description: 总营收
+
+      - name: statement_period_num
+        description: 辅助计算用，如：1表示一季报，2表示中报
