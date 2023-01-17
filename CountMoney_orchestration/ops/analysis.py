@@ -76,7 +76,7 @@ def portfolio_analysis(context, portfolio: pd.DataFrame):
     sell_result = ""
     turn_result = ""
     for index,value in portfolio.iterrows():
-        if value.profit_ratio > 0.1:
+        if value.profit_ratio > 0.1 and value.sub_portfolio != '其他':
             profit = round(value.profit_ratio*100,2)
             stage,signal = moving_sell_strategy(value,pro)
             context.log.info(f"{value.stock_name} {stage} {signal}")
