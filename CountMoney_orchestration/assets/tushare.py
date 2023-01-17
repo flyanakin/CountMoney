@@ -219,3 +219,85 @@ def tushare_daily_basic_index(context) -> pd.DataFrame:
     created_at = round(time())
     data['created_at'] = created_at
     return data
+
+@asset(
+    io_manager_key="warehouse_pg_append_io_manager",
+    key_prefix="tushare",
+    group_name="tushare",
+    op_tags={"group": "EL"},
+    name="tushare_forecast",
+    config_schema={
+        "mode": str,
+        "ts_code": str,
+        "ann_date": str,
+        "period": str,
+    },
+)
+def tushare_forecast(context) -> pd.DataFrame:
+    """
+    业绩预告
+    :param context:
+    :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=45
+    """
+    pro = ts.pro_api(f"{TUSHARE_TOKEN}")
+    __mode = context.op_config["mode"]
+    __ts_code = context.op_config["ts_code"]
+    __ann_date = context.op_config["ann_date"]
+    __period = context.op_config["period"]
+
+    if __mode == 'daily':
+        today = date.strftime(date.today(), "%Y%m%d")
+        data = pro.forecast_vip(ann_date=today)
+    elif __mode == 'para':
+        data = pro.forecast_vip(
+            ts_code=__ts_code,
+            period=__period,
+            ann_date=__ann_date,
+        )
+    else:
+        ValueError("Unsupported value: " + str(context.op_config["mode"]))
+
+    created_at = round(time())
+    data['created_at'] = created_at
+    return data
+
+@asset(
+    io_manager_key="warehouse_pg_append_io_manager",
+    key_prefix="tushare",
+    group_name="tushare",
+    op_tags={"group": "EL"},
+    name="tushare_express",
+    config_schema={
+        "mode": str,
+        "ts_code": str,
+        "ann_date": str,
+        "period": str,
+    },
+)
+def tushare_express(context) -> pd.DataFrame:
+    """
+    业绩预告
+    :param context:
+    :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=45
+    """
+    pro = ts.pro_api(f"{TUSHARE_TOKEN}")
+    __mode = context.op_config["mode"]
+    __ts_code = context.op_config["ts_code"]
+    __ann_date = context.op_config["ann_date"]
+    __period = context.op_config["period"]
+
+    if __mode == 'daily':
+        today = date.strftime(date.today(), "%Y%m%d")
+        data = pro.express_vip(ann_date=today)
+    elif __mode == 'para':
+        data = pro.express_vip(
+            ts_code=__ts_code,
+            period=__period,
+            ann_date=__ann_date,
+        )
+    else:
+        ValueError("Unsupported value: " + str(context.op_config["mode"]))
+
+    created_at = round(time())
+    data['created_at'] = created_at
+    return data
