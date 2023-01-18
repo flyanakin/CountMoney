@@ -33,7 +33,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 models:
   CountMoney_model:
-    # Config indicated by + and applies to all files under models/example/
+    +post-hook:
+      # 因为目前都是用全量模型，drop表pg会清除权限，导致bi账号权限被刷掉，所以加这个post-hook
+      - 'GRANT select ON all tables in schema finance TO bi;'
+      - 'GRANT USAGE ON SCHEMA finance to bi;'
     staging:
       +materialized: view
     intermediate:
