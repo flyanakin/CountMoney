@@ -6,8 +6,8 @@ preview as (
 metrics as (
     select
         stock_code,
-        {{ ratio('net_income', 'net_income_last_year_quarterly', 4) }} as growth_net_income_quarterly_ratio,
-        {{ ratio('total_revenue', 'total_revenue_last_year_quarterly', 4) }} as growth_total_revenue_quarterly_ratio,
+        {{ ratio('net_income_quarterly', 'net_income_last_year_quarterly', 4) }} as growth_net_income_quarterly_ratio,
+        {{ ratio('total_revenue_quarterly', 'total_revenue_last_year_quarterly', 4) }} as growth_total_revenue_quarterly_ratio,
         (net_income + net_income_last_3quarter) as net_income_ttm,
         (total_revenue + total_revenue_last_3quarter) as total_revenue_ttm,
         round(total_market_capitalization / (net_income + net_income_last_3quarter) ,2) as pe_ttm
