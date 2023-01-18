@@ -15,7 +15,11 @@ from CountMoney_orchestration.jobs.daily_push_job import (
     performance_push_job,
     preview_push_job,
 )
-from CountMoney_orchestration.sensors.warehouse_sensors import portfolio_update_sensor
+from CountMoney_orchestration.sensors.warehouse_sensors import (
+    portfolio_update_sensor,
+    performance_update_sensor,
+    preview_update_sensor,
+)
 from CountMoney_orchestration.resources import (
     resources_prod,
     dbt_resource_def,
@@ -67,7 +71,11 @@ def CountMoney_orchestration():
         preview_push_job,
     ]
 
-    all_sensors = [portfolio_update_sensor]
+    all_sensors = [
+        portfolio_update_sensor,
+        performance_update_sensor,
+        preview_update_sensor,
+    ]
 
     all_schedules = [
         ScheduleDefinition(
