@@ -299,7 +299,7 @@ models:
       - name: end_date
         description: 报告期
 
-      - name: revenue
+      - name: total_revenue
         description: 营业收入(元)
 
       - name: operate_profit
@@ -312,7 +312,7 @@ models:
         description: 净利润(元)
 
       - name: total_assets
-        description: 预告净利润上限，单位：元
+        description: 总资产，单位：元
 
       - name: total_hldr_eqy_exc_min_int
         description: 股东权益合计(不含少数股东权益)

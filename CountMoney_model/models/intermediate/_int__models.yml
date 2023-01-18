@@ -293,6 +293,56 @@ models:
       - name: change_reason
         description: 业绩变动原因
 
+  - name: int_preview
+    description: 业绩快报融合表
+    columns:
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: stock_name
+        description: 股票名称
+
+      - name: ann_date
+        description: 公告日期
+
+      - name: end_date
+        description: 报告期，如"20221231"表示2022年年报
+
+      - name: net_income
+        description: 净利润(元)
+
+      - name: revenue
+        description: 营业收入(元)
+
+      - name: diluted_roe
+        description: 净资产收益率(摊薄)(%)
+
+      - name: net_income_quarterly
+        description: 快报单季度净利润
+
+      - name: net_income_last_3quarter
+        description: 过去3个季度的净利润，用于计算预测净利润ttm
+
+      - name: net_income_last_year_quarterly
+        description: 去年同期单季度净利润
+
+      - name: total_revenue_quarterly
+        description: 快报总营收
+
+      - name: total_revenue_last_3quarter
+        description: 过去3个季度的总营收，用于计算预测总营收ttm
+
+      - name: total_revenue_last_year_quarterly
+        description: 去年同期单季度总营收
+
+      - name: total_market_capitalization
+        description: 最新总市值
+
+      - name: industry
+        description: 所属行业
+
+      - name: perf_summary
+        description: 业绩简要说明
 
   - name: int_income_past_year
     description: 最近一年的合并利润表
