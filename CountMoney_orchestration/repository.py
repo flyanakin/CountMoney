@@ -11,7 +11,7 @@ from CountMoney_orchestration.assets import tushare, airtable
 from CountMoney_orchestration.jobs.demo import demo
 from CountMoney_orchestration.jobs.daily_assets_job import daily_assets_job
 from CountMoney_orchestration.jobs.daily_push_job import (
-    daily_push_job,
+    portfolio_push_job,
 )
 from CountMoney_orchestration.sensors.warehouse_sensors import portfolio_update_sensor
 from CountMoney_orchestration.resources import (
@@ -57,7 +57,7 @@ def CountMoney_orchestration():
 
     all_assets = [*update_daily_assets, *airtable_assets]
 
-    all_jobs = [demo, daily_assets_job_resolved, daily_push_job]
+    all_jobs = [demo, daily_assets_job_resolved, portfolio_push_job]
 
     all_sensors = [portfolio_update_sensor]
 
