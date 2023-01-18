@@ -41,7 +41,7 @@ final as (
         formatted.ts_code                       as stock_code,
         formatted.ann_date                      as ann_date,
         formatted.end_date                      as end_date,
-        formatted.revenue                       as revenue,
+        formatted.revenue                       as total_revenue,
         formatted.operate_profit                as operate_profit,
         formatted.n_income                      as net_income,
         formatted.total_assets                  as total_assets,

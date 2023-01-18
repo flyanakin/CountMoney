@@ -38,6 +38,14 @@ daily_config = {
                 "ann_date": "",
             }
         },
+        "tushare__tushare_express": {
+            "config": {
+                "mode": "daily",
+                "ts_code": "",
+                "period": "",
+                "ann_date": "",
+            }
+        },
     }
 }
 
