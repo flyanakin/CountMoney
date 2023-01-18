@@ -175,3 +175,49 @@ models:
 
       - name: change_reason
         description: 业绩变动原因
+
+
+  - name: preview
+    description: 业绩快报
+    columns:
+      - name: stock_code
+        description: 股票代码
+
+      - name: stock_name
+        description: 股票名称
+
+      - name: ann_date
+        description: 公告日期
+
+      - name: end_date
+        description: 报告期，如"20221231"表示2022年年报
+
+      - name: growth_net_income_quarterly_ratio
+        description: 单季同比净利润增长率
+
+      - name: growth_total_revenue_quarterly_ratio
+        description: 单季同比总营收增长率
+
+      - name: net_income_ttm
+        description: 净利润ttm下限
+
+      - name: total_revenue_ttm
+        description: 净利润ttm下限
+
+      - name: pe_ttm
+        description: pe_ttm
+
+      - name: peg_by_revenue
+        description: 使用营收增长计算的peg
+
+      - name: peg_by_net_income
+        description: 使用净利润增长计算的peg
+
+      - name: diluted_roe
+        description: 净资产收益率(摊薄)(%)
+
+      - name: industry
+        description: 所属行业
+
+      - name: perf_summary
+        description: 业绩简要说明

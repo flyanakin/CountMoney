@@ -92,7 +92,7 @@ final as (
         preview.ann_date                              as ann_date,
         preview.end_date                              as end_date,
         preview.net_income                            as net_income,
-        preview.total_revenue                         as revenue,
+        preview.total_revenue                         as total_revenue,
         preview.diluted_roe                           as diluted_roe,
         preview_quarterly.net_income_quarterly        as net_income_quarterly,
         preview_quarterly.total_revenue_quarterly     as total_revenue_quarterly,
