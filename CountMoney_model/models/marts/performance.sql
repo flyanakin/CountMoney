@@ -6,8 +6,8 @@ performance as (
 metrics as (
     select
         stock_code,
-        {{ ratio('net_income_min', 'net_income_last_year_quarterly', 4) }} as growth_net_income_quarterly_ratio_min,
-        {{ ratio('net_income_max', 'net_income_last_year_quarterly', 4) }} as growth_net_income_quarterly_ratio_max,
+        {{ ratio('net_income_quarterly_min', 'net_income_last_year_quarterly', 4) }} as growth_net_income_quarterly_ratio_min,
+        {{ ratio('net_income_quarterly_max', 'net_income_last_year_quarterly', 4) }} as growth_net_income_quarterly_ratio_max,
         (net_income_min + net_income_last_3quarter) as net_income_ttm_min,
         (net_income_max + net_income_last_3quarter) as net_income_ttm_max,
         round(total_market_capitalization / (net_income_min + net_income_last_3quarter) ,2) as pe_ttm_max,

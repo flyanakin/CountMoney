@@ -128,10 +128,10 @@ def performance_analysis(context, df: pd.DataFrame):
     context.log.info(today)
     selected = df.loc[
         (df['pe_ttm_max'] < 50)
-        & (df['peg_max'] < 0.5)
+        & (df['peg_max'] < 1)
         & (df['peg_max'] > 0)
         & (df['peg_min'] > 0)
-        & (df['growth_net_income_quarterly_ratio_min'] > 0.5)
+        & (df['growth_net_income_quarterly_ratio_min'] > 0.35)
         & (df['ann_date'] == today)
     ]
 
@@ -139,6 +139,9 @@ def performance_analysis(context, df: pd.DataFrame):
     for index, value in selected.iterrows():
         performance_str = f"{value.stock_name}:净利润增长({round(value.growth_net_income_quarterly_ratio_min*100,2)}%~{round(value.growth_net_income_quarterly_ratio_max*100,2)}%)，peg({value.peg_min}~{value.peg_max})"
         result = result + performance_str + "\n"
+
+    if result == "":
+        result = "今日没有好业绩预告，搬砖去吧"
 
     message = f"""
 {today} 业绩预告：
@@ -153,7 +156,7 @@ def preview_analysis(context, df: pd.DataFrame):
     today = date.strftime(date.today(), "%Y-%m-%d")
     selected = df.loc[
         (df['pe_ttm'] < 50)
-        & (df['peg_by_net_income'] < 0.5)
+        & (df['peg_by_net_income'] < 1)
         & (df['growth_net_income_quarterly_ratio'] > 0.5)
         & (df['growth_total_revenue_quarterly_ratio'] > 0.2)
         & (df['ann_date'] == today)
@@ -163,6 +166,9 @@ def preview_analysis(context, df: pd.DataFrame):
     for index, value in selected.iterrows():
         p_str = f"{value.stock_name}:净利润增长({round(value.growth_net_income_quarterly_ratio*100,2)}%),营收增长({round(value.growth_total_revenue_quarterly_ratio*100,2)}%)，营收peg({value.peg_by_revenue})，净利润peg({value.peg_by_net_income})"
         result = result + p_str + "\n"
+
+    if result == "":
+        result = "今日没有好业绩快报，搬砖去吧"
 
     message = f"""
 {today} 业绩快报：
