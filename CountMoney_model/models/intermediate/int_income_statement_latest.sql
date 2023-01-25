@@ -4,6 +4,10 @@ import as (
     select * from {{ ref('stg_tushare_income_statement') }}
 ),
 
+indicator_quarterly as (
+    select * from {{ ref('int_finance_indicator_quarterly') }}
+),
+
 deduplicated as (
     --根据发布日期和更新标志去重
     select * from (
@@ -17,7 +21,7 @@ deduplicated as (
     where t.rn1 = 1
 ),
 
-latest as (
+latest_income as (
     select * from (
         select
             *,
@@ -32,6 +36,8 @@ latest as (
 final as (
     select
         *
-    from latest
+    from latest_income
+    left join indicator_quarterly
+    using(stock_code, end_date)
 )
 select * from final

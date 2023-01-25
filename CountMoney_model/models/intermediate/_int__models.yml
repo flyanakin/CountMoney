@@ -131,6 +131,9 @@ models:
       - name: net_income_exclude_minority
         description: 净利润(不含少数股东损益)
 
+      - name: extraordinary_items
+        description: 非经常性损益（单季）
+
       - name: update_flag
         description: 更新标志
 
@@ -150,7 +153,10 @@ models:
         description: 过去12个月的净利润总和(不含少数股东损益)
 
       - name: net_income_last_year
-        description: 去年同期季度的净利润
+        description: 去年同期季度的归母净利润
+
+      - name: extraordinary_items_last_year
+        description: 去年同期季度的非经常性损益
 
       - name: total_revenue_ttm
         description: 过去12个月的营收总和
@@ -364,6 +370,28 @@ models:
 
       - name: total_revenue
         description: 总营收
+
+      - name: statement_period_num
+        description: 辅助计算用，如：1表示一季报，2表示中报
+
+
+  - name: int_finance_indicator_quarterly
+    description: 财务指标（单季）
+    columns:
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: ann_date
+        description: 公告日期
+
+      - name: end_date
+        description: 报告期
+
+      - name: extraordinary_items
+        description: 非经常性损益
+
+      - name: net_income_exclude_extra_item
+        description: 扣非净利润
 
       - name: statement_period_num
         description: 辅助计算用，如：1表示一季报，2表示中报

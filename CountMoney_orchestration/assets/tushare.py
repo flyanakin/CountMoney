@@ -220,6 +220,7 @@ def tushare_daily_basic_index(context) -> pd.DataFrame:
     data['created_at'] = created_at
     return data
 
+
 @asset(
     io_manager_key="warehouse_pg_append_io_manager",
     key_prefix="tushare",
@@ -261,6 +262,7 @@ def tushare_forecast(context) -> pd.DataFrame:
     data['created_at'] = created_at
     return data
 
+
 @asset(
     io_manager_key="warehouse_pg_append_io_manager",
     key_prefix="tushare",
@@ -298,6 +300,55 @@ def tushare_express(context) -> pd.DataFrame:
     else:
         ValueError("Unsupported value: " + str(context.op_config["mode"]))
 
+    created_at = round(time())
+    data['created_at'] = created_at
+    return data
+
+
+@asset(
+    io_manager_key="tushare_pg_append_io_manager",
+    key_prefix="tushare",
+    group_name="tushare",
+    op_tags={"group": "EL"},
+    name="tushare_fina_indicator",
+    config_schema={
+        "mode": str,
+        "ts_code": str,
+        "ann_date": str,
+        "start_date": str,
+        "end_date": str,
+        "period": str,
+    },
+)
+def tushare_fina_indicator(context) -> pd.DataFrame:
+    """
+    财务指标表
+    :param context:
+    :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=79
+    """
+    pro = ts.pro_api(f"{TUSHARE_TOKEN}")
+    __mode = context.op_config["mode"]
+    __ts_code = context.op_config["ts_code"]
+    __ann_date = context.op_config["ann_date"]
+    __start_date = context.op_config["start_date"]
+    __end_date = context.op_config["end_date"]
+    __period = context.op_config["period"]
+
+    if __mode == "daily":
+        today = date.strftime(date.today(), "%Y%m%d")
+        data = pro.fina_indicator_vip(ann_date=today)
+    elif __mode == "para":
+        data = pro.fina_indicator_vip(
+            ts_code=__ts_code,
+            period=__period,
+            ann_date=__ann_date,
+            start_date=__start_date,
+            end_date=__end_date,
+        )
+    else:
+        ValueError("Unsupported value: " + str(context.op_config["mode"]))
+
+    ##生成入库时间
     created_at = round(time())
     data['created_at'] = created_at
     return data
