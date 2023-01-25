@@ -1,4 +1,4 @@
-{% set atom_metrics = ["extra_item"] %}
+{% set atom_metrics = ["extra_item","profit_dedt"] %}
 
 with import as (
     --输入按created_time去重
@@ -38,6 +38,7 @@ final as (
         ann_date,
         end_date,
         extra_item as extraordinary_items,
+        profit_dedt as net_income_exclude_extra_item,
         update_flag,
         created_at
     from formatted

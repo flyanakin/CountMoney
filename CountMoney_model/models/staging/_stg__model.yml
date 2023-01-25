@@ -341,6 +341,9 @@ models:
       - name: extraordinary_items
         description: 非经常性损益
 
+      - name: net_income_exclude_extra_item
+        description: 扣非净利润
+
       - name: update_flag
         description: 更新标志
 

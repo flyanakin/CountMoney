@@ -384,5 +384,8 @@ models:
       - name: extraordinary_items
         description: 非经常性损益
 
+      - name: net_income_exclude_extra_item
+        description: 扣非净利润
+
       - name: statement_period_num
         description: 辅助计算用，如：1表示一季报，2表示中报

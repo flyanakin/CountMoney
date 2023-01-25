@@ -1,4 +1,4 @@
-{% set metrics = ["extraordinary_items"] %}
+{% set metrics = ["extraordinary_items","net_income_exclude_extra_item"] %}
 
 with
 import as (
