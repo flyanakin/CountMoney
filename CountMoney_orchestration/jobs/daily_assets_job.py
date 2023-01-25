@@ -46,6 +46,16 @@ daily_config = {
                 "ann_date": "",
             }
         },
+        "tushare__tushare_fina_indicator": {
+            "config": {
+                "mode": "daily",
+                "ts_code": "",
+                "period": "",
+                "ann_date": "",
+                "start_date": "",
+                "end_date": "",
+            }
+        },
     }
 }
 
