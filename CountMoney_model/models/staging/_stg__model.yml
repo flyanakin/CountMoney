@@ -325,3 +325,24 @@ models:
 
       - name: perf_summary
         description: 业绩简要说明
+
+  - name: stg_tushare_finance_indicator
+    description: 财务指标清洗表
+    columns:
+      - name: stock_code
+        description: 股票代码，tushare格式，如"000001.SZ"
+
+      - name: ann_date
+        description: 公告日期
+
+      - name: end_date
+        description: 报告期
+
+      - name: extraordinary_items
+        description: 非经常性损益
+
+      - name: update_flag
+        description: 更新标志
+
+      - name: created_at
+        description: 数据入库时间，时间戳
