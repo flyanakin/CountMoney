@@ -4,6 +4,7 @@ from CountMoney_orchestration.ops.analysis import (
     portfolio_analysis,
     performance_analysis,
     preview_analysis,
+    index_monitor,
 )
 from CountMoney_orchestration.ops.push import send_wecom_bot, send_wecom_bot_queue
 
@@ -74,4 +75,15 @@ def push_preview_analysis_result():
 
 preview_push_job = push_preview_analysis_result.to_job(
     name='preview_push_job', config=preview_config
+)
+
+
+@graph()
+def index_monitor_result():
+    message = index_monitor()
+    send_wecom_bot_queue(message)
+
+
+index_monitor_job = index_monitor_result.to_job(
+    name='index_monitor_job',
 )

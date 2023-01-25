@@ -14,6 +14,7 @@ from CountMoney_orchestration.jobs.daily_push_job import (
     portfolio_push_job,
     performance_push_job,
     preview_push_job,
+    index_monitor_job,
 )
 from CountMoney_orchestration.sensors.warehouse_sensors import (
     portfolio_update_sensor,
@@ -69,6 +70,7 @@ def CountMoney_orchestration():
         portfolio_push_job,
         performance_push_job,
         preview_push_job,
+        index_monitor_job,
     ]
 
     all_sensors = [
@@ -81,6 +83,13 @@ def CountMoney_orchestration():
         ScheduleDefinition(
             cron_schedule="0 18 * * *",
             job=daily_assets_job_resolved,
+            environment_vars=dict(os.environ),
+            execution_timezone="Asia/Shanghai",
+            default_status=DefaultScheduleStatus.RUNNING,
+        ),
+        ScheduleDefinition(
+            cron_schedule="0 18 * * *",
+            job=index_monitor_job,
             environment_vars=dict(os.environ),
             execution_timezone="Asia/Shanghai",
             default_status=DefaultScheduleStatus.RUNNING,

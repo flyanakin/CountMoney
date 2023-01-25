@@ -124,6 +124,12 @@ def portfolio_analysis(context, portfolio: pd.DataFrame):
 
 @op()
 def performance_analysis(context, df: pd.DataFrame):
+    """
+    业绩预告分析
+    :param context:
+    :param df:
+    :return:
+    """
     today = date.strftime(date.today(), "%Y-%m-%d")
     context.log.info(today)
     selected = df.loc[
@@ -153,6 +159,12 @@ def performance_analysis(context, df: pd.DataFrame):
 
 @op()
 def preview_analysis(context, df: pd.DataFrame):
+    """
+    业绩快报分析
+    :param context:
+    :param df:
+    :return:
+    """
     today = date.strftime(date.today(), "%Y-%m-%d")
     selected = df.loc[
         (df['pe_ttm'] < 50)
@@ -173,6 +185,83 @@ def preview_analysis(context, df: pd.DataFrame):
     message = f"""
 {today} 业绩快报：
 {result}
+"""
+    context.log.info(message)
+    return message
+
+
+@op()
+def index_monitor(context):
+    """
+    监控股票指数
+    :param context:
+    :return: message
+    """
+    today = date.strftime(date.today(), "%Y-%m-%d")
+    ts.set_token(f"{TUSHARE_TOKEN}")
+    pro = ts.pro_api()
+
+    # todo:后续要做抽象
+    # 取数，因为要ma60，所以需要取一段时间的数据，写一个差不多够远的数字就可以了
+    df_sse50 = ts.pro_bar(
+        ts_code='000016.SH',
+        asset='I',
+        freq='D',
+        start_date='20220930',
+        end_date=today,
+        ma=[60],
+    )
+
+    df_gei = ts.pro_bar(
+        ts_code='399006.SZ',
+        asset='I',
+        freq='D',
+        start_date='20220930',
+        end_date=today,
+        ma=[60],
+    )
+
+    # 上证指数和深成指不用算背离率，所以取数距离短一点
+    df_sse = ts.pro_bar(
+        ts_code='000001.SH',
+        asset='I',
+        start_date='20230101',
+        end_date=today,
+    )
+
+    df_szse = ts.pro_bar(
+        ts_code='399001.SZ',
+        asset='I',
+        start_date='20230101',
+        end_date=today,
+    )
+    # 上证50和创业版指数
+    sse50 = round(df_sse50['close'].values[0], 2)
+    gei = round(df_gei['close'].values[0], 2)
+
+    # 计算60日背离率
+    sse50_ma60 = df_sse50['ma60'].values[0]
+    sse50_60bias = round((sse50 - sse50_ma60) / sse50_ma60 * 100, 2)
+
+    gei_ma60 = df_gei['ma60'].values[0]
+    gei_60bias = round((gei - gei_ma60) / gei_ma60 * 100, 2)
+
+    # 两市成交额
+    sse_amount = df_sse['amount'].values[0]
+    sse_pct_chg = round(df_sse['pct_chg'].values[0], 2)
+
+    szse_amount = df_szse['amount'].values[0]
+    szse_pct_chg = round(df_szse['pct_chg'].values[0], 2)
+
+    total_amount = round((sse_amount + szse_amount) / 100000)
+
+    message = f"""
+{today} 春季行情监控，
+保守：满足一个指标即可降至半仓
+激进：大多数指标满足再行动
+1、上证50偏离60日均线达到15%（上证50：{sse50_60bias}%，创业板：{gei_60bias}%）
+2、上证50达到3000～3100点（今天：{sse50}），或创业板指达到2800～2900点（今天：{gei}）
+3、大盘上涨时成交额达到1.3万亿，或下跌时达到1.7万亿（今天上证{sse_pct_chg}%，深证{szse_pct_chg}%，总成交额{total_amount}亿）
 """
     context.log.info(message)
     return message
