@@ -61,7 +61,7 @@ models:
 
       - name: net_income_yoy_ratio
         description: |
-          ### 净利润同比增长率
+          ### 扣除非经常性损益归属母公司的净利润同比增长率
           * 推荐值：>0.5
 
       - name: peg_by_net_income

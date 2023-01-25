@@ -41,15 +41,26 @@ qi_a_index_defence as (
     on balance.stock_code = income.stock_code and balance.end_date = income.end_date
 ),
 
-growth as (
+growth_joined as (
     select
         income.stock_code,
         income.end_date,
-        {{ ratio('net_income_exclude_minority', 'net_income_last_year',4 ) }} as net_income_yoy_ratio,
-        {{ ratio('total_revenue', 'total_revenue_last_year', 4) }} as total_revenue_yoy_ratio
+        (net_income_exclude_minority - coalesce(extraordinary_items,0)) as net_income_pure,
+        (net_income_last_year - coalesce(extraordinary_items_last_year,0)) as net_income_pure_last_year,
+        total_revenue,
+        total_revenue_last_year
     from income
     left join income_pivoted
         on income.stock_code = income_pivoted.stock_code
+),
+
+growth as (
+    select
+        stock_code,
+        end_date,
+        {{ ratio('net_income_pure', 'net_income_pure_last_year',4 ) }} as net_income_yoy_ratio,
+        {{ ratio('total_revenue', 'total_revenue_last_year', 4) }} as total_revenue_yoy_ratio
+    from growth_joined
 ),
 
 peg as (
