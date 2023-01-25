@@ -131,6 +131,9 @@ models:
       - name: net_income_exclude_minority
         description: 净利润(不含少数股东损益)
 
+      - name: extraordinary_items
+        description: 非经常性损益（单季）
+
       - name: update_flag
         description: 更新标志
 
@@ -150,7 +153,10 @@ models:
         description: 过去12个月的净利润总和(不含少数股东损益)
 
       - name: net_income_last_year
-        description: 去年同期季度的净利润
+        description: 去年同期季度的归母净利润
+
+      - name: extraordinary_items_last_year
+        description: 去年同期季度的非经常性损益
 
       - name: total_revenue_ttm
         description: 过去12个月的营收总和
