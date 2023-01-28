@@ -3,7 +3,27 @@
 
 
 with import as (
-    select * from {{ source('tushare', 'tushare_convertible_bond_daily') }}
+    select * from (
+        select
+            *,
+            row_number() over (
+                partition by ts_code,trade_date
+                order by created_at desc
+                ) as rn_created
+        from {{ source('tushare', 'tushare_convertible_bond_daily') }}) as partitioned
+    where partitioned.rn_created = 1
+),
+
+latest as (
+    select * from (
+        select
+            *,
+            row_number() over (
+                partition by ts_code
+                order by trade_date desc
+                ) as rn_trade_date
+        from {{ source('tushare', 'tushare_convertible_bond_daily') }}) as partitioned
+    where partitioned.rn_trade_date = 1
 ),
 
 formatted as (
@@ -13,9 +33,8 @@ formatted as (
         {% for number_field in number_fields %}
         round({{ number_field }}::numeric, 2) as {{ number_field }},
         {%- endfor %}
-
         created_at
-    from import
+    from latest
 ),
 
 final as (

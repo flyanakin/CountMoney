@@ -8,7 +8,15 @@
 
 
 with import as (
-    select * from {{ source('tushare', 'tushare_daily_basic_index') }}
+    select * from (
+        select
+            *,
+            row_number() over (
+                partition by ts_code,trade_date
+                order by created_at desc
+                ) as rn_created
+        from {{ source('tushare', 'tushare_daily_basic_index') }}) as partitioned
+    where partitioned.rn_created = 1
 ),
 
 formatted as (
