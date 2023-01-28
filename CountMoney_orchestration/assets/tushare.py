@@ -352,3 +352,65 @@ def tushare_fina_indicator(context) -> pd.DataFrame:
     created_at = round(time())
     data['created_at'] = created_at
     return data
+
+
+@asset(
+    io_manager_key="tushare_pg_replace_io_manager",
+    key_prefix="tushare",
+    group_name="tushare",
+    op_tags={"group": "EL"},
+    name="tushare_convertible_bond_basic",
+)
+def tushare_convertible_bond_basic() -> pd.DataFrame:
+    """
+    tushare可转债列表
+    :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=185
+    """
+    pro = ts.pro_api(f"{TUSHARE_TOKEN}")
+    data = pro.cb_basic(
+        fields="ts_code,bond_short_name,stk_code,stk_short_name,list_date,delist_date"
+    )
+    return data
+
+
+@asset(
+    io_manager_key="tushare_pg_append_io_manager",
+    key_prefix="tushare",
+    group_name="tushare",
+    op_tags={"group": "EL"},
+    name="tushare_convertible_bond_daily",
+    config_schema={
+        "mode": str,
+        "ts_code": str,
+        "start_date": str,
+        "end_date": str,
+    },
+)
+def tushare_convertible_bond_daily(context) -> pd.DataFrame:
+    """
+    可转债每日行情
+    :param context:
+    :return:pandas.Dataframe，https://tushare.pro/document/2?doc_id=187
+    """
+    pro = ts.pro_api(f"{TUSHARE_TOKEN}")
+    __mode = context.op_config["mode"]
+    __ts_code = context.op_config["ts_code"]
+    __start_date = context.op_config["start_date"]
+    __end_date = context.op_config["end_date"]
+
+    if __mode == 'daily':
+        today = date.strftime(date.today(), "%Y%m%d")
+        data = pro.cb_daily(trade_date=today)
+    elif __mode == 'para':
+        ##开始时间和结束时间都是必填
+        data = pro.cb_daily(
+            ts_code=__ts_code,
+            start_date=__start_date,
+            end_date=__end_date,
+        )
+    else:
+        ValueError("Unsupported value: " + str(context.op_config["mode"]))
+
+    created_at = round(time())
+    data['created_at'] = created_at
+    return data

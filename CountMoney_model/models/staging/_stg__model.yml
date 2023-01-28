@@ -229,17 +229,20 @@ models:
   - name: stg_airtable_portfolio
     description: 清洗层持仓数据
     columns:
-      - name: stock_code
-        description: 股票代码，tushare格式，如"000001.SZ"
+      - name: code
+        description: 代码，tushare格式，如"000001.SZ"
 
-      - name: stock_name
-        description: 股票名称
+      - name: asset_name
+        description: 资产名称
+
+      - name: asset_type
+        description: 资产类型：现金、股票、债券、基金
 
       - name: position
         description: 持仓数量，单位：股
 
       - name: cost
-        description: 成本价，前复权
+        description: 成本价，股票前复权
 
       - name: sub_portfolio
         description: 组合名称，一只股票只可能出现在一个组合
@@ -346,6 +349,42 @@ models:
 
       - name: update_flag
         description: 更新标志
+
+      - name: created_at
+        description: 数据入库时间，时间戳
+
+  - name: stg_tushare_convertible_bond_basic
+    description: 清洗层可转债基础数据
+    columns:
+      - name: bond_code
+        description: 债券代码，tushare格式，如"125002.SZ"
+
+      - name: bond_short_name
+        description: 可转债简称
+
+      - name: stock_code
+        description: 正股代码
+
+      - name: stock_name
+        description: 正股名称
+
+      - name: list_date
+        description: 上市日期
+
+      - name: delist_date
+        description: 摘牌日
+
+  - name: stg_tushare_convertible_bond_daily
+    description: 清洗层可转债日线数据
+    columns:
+      - name: bond_code
+        description: 债券代码，tushare格式，如"125002.SZ"
+
+      - name: trade_date
+        description: 交易日期
+
+      - name: close
+        description: 收盘价(元)
 
       - name: created_at
         description: 数据入库时间，时间戳

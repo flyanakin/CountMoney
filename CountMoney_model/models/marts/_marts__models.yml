@@ -92,11 +92,14 @@ models:
   - name: portfolio
     description: 最新持仓明细数据
     columns:
-      - name: stock_code
-        description: 股票代码
+      - name: code
+        description: 代码
 
-      - name: stock_name
-        description: 股票名称
+      - name: asset_name
+        description: 资产名称
+
+      - name: asset_type
+        description: 资产类型：现金、股票、债券、基金
 
       - name: position
         description: 持仓数量，单位：股

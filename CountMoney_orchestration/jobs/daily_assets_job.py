@@ -56,6 +56,14 @@ daily_config = {
                 "end_date": "",
             }
         },
+        "tushare__tushare_convertible_bond_daily": {
+            "config": {
+                "mode": "daily",
+                "ts_code": "",
+                "start_date": "",
+                "end_date": "",
+            }
+        },
     }
 }
 

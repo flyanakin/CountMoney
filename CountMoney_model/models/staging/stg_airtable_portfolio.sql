@@ -9,7 +9,7 @@ portfolio as (
         select
             *,
             row_number() over (
-                partition by stock_code
+                partition by code
                 order by created_at desc
                 ) as rn
         from import) as t
@@ -18,8 +18,9 @@ portfolio as (
 
 formatted as (
     select
-        stock_code,
-        stock_name,
+        code,
+        asset_name,
+        asset_type,
         {% for number_field in number_fields %}
         round({{ number_field }}::numeric, 2) as {{ number_field }},
         {%- endfor %}

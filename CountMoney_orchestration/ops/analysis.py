@@ -78,17 +78,21 @@ def portfolio_analysis(context, portfolio: pd.DataFrame):
     sell_result = ""
     turn_result = ""
     for index, value in portfolio.iterrows():
-        if value.profit_ratio > 0.1 and value.sub_portfolio != '其他':
+        if (
+            value.profit_ratio > 0.1
+            and value.sub_portfolio != '其他'
+            and value.asset_type == '股票'
+        ):
             profit = round(value.profit_ratio * 100, 2)
             stage, signal = moving_sell_strategy(value, pro)
-            context.log.info(f"{value.stock_name} {stage} {signal}")
-            sell_str = f"{value.stock_name}(阶梯{stage}，持仓收益{profit}%，{signal})"
+            context.log.info(f"{value.asset_name} {stage} {signal}")
+            sell_str = f"{value.asset_name}(阶梯{stage}，持仓收益{profit}%，{signal})"
             sell_result = sell_result + sell_str + "\n"
             if stage > 0:
                 turnover_signal, total_mv, turnover_rate = turnover_sell_strategy(
                     value, pro
                 )
-                turn_str = f"{value.stock_name}(持仓收益{profit}%，市值{total_mv}亿,今日换手率{turnover_rate}%，{turnover_signal})"
+                turn_str = f"{value.asset_name}(持仓收益{profit}%，市值{total_mv}亿,今日换手率{turnover_rate}%，{turnover_signal})"
                 context.log.info(f"{total_mv},{turnover_rate}")
                 turn_result = turn_result + turn_str + "\n"
 
@@ -97,10 +101,14 @@ def portfolio_analysis(context, portfolio: pd.DataFrame):
     for row in portfolio.itertuples():
         if row.sub_portfolio != '其他':
             if row.profit_ratio < -0.15:
-                stock_cut_str = f"{row.stock_name}({row.sub_portfolio},{round(row.profit_ratio*100, 2)})"
+                stock_cut_str = f"{row.asset_name}({row.sub_portfolio},{round(row.profit_ratio*100, 2)})"
                 cut_l.append(stock_cut_str)
             else:
                 stock_cut_l = '无'
+        elif row.asset_type == '债券':
+            if row.profit_ratio < -0.08:
+                stock_cut_str = f"{row.asset_name}({row.sub_portfolio},{round(row.profit_ratio*100, 2)})"
+                cut_l.append(stock_cut_str)
     stock_cut_l = "、".join(cut_l)
 
     message = f"""

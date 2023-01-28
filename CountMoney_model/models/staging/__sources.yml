@@ -53,6 +53,18 @@ sources:
           - name: ts_code
             description: tushare股票代码
 
+      - name: tushare_convertible_bond_basic
+        description: 可转债基本信息
+        columns:
+          - name: ts_code
+            description: tushare股票代码
+
+      - name: tushare_convertible_bond_daily
+        description: 可转债日线行情
+        columns:
+          - name: ts_code
+            description: tushare股票代码
+
   - name: airtable # this is the source_name
     database: warehouse
     schema: datasources
