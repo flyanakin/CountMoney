@@ -227,11 +227,14 @@ models:
   - name: int_portfolio
     description: 持仓数据融合表
     columns:
-      - name: stock_code
-        description: 股票代码，tushare格式，如"000001.SZ"
+      - name: code
+        description: 代码，tushare格式，如"000001.SZ"
 
-      - name: stock_name
+      - name: asset_name
         description: 股票名称
+
+      - name: asset_type
+        description: 资产类型：现金、股票、债券、基金
 
       - name: position
         description: 持仓数量，单位：股
@@ -247,6 +250,9 @@ models:
 
       - name: industry
         description: 所属行业
+
+      - name: order_date
+        description: 买入日期
 
   - name: int_performance
     description: 业绩预告融合表
