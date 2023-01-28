@@ -5,7 +5,7 @@ portfolio as (
 
 metrics as (
     select
-        stock_code,
+        code,
         round((cost*position), 2) as total_cost,
         round((close - cost)*position, 2) as profit,
         round((close - cost) / cost, 4) as profit_ratio,
@@ -15,8 +15,9 @@ metrics as (
 
 final as (
     select
-       portfolio.stock_code          as stock_code,
-       portfolio.stock_name          as stock_name,
+       portfolio.code                as code,
+       portfolio.asset_name          as asset_name,
+       portfolio.asset_type          as asset_type,
        portfolio.position            as position,
        portfolio.cost                as cost,
        portfolio.close               as last,
@@ -29,7 +30,7 @@ final as (
        portfolio.order_date          as order_date
     from portfolio
     left join metrics
-    on portfolio.stock_code = metrics.stock_code
+    on portfolio.code = metrics.code
 )
 
 select * from final
