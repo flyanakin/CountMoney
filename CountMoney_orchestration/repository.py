@@ -81,14 +81,14 @@ def CountMoney_orchestration():
 
     all_schedules = [
         ScheduleDefinition(
-            cron_schedule="0 18 * * *",
+            cron_schedule="30 17 * * *",
             job=daily_assets_job_resolved,
             environment_vars=dict(os.environ),
             execution_timezone="Asia/Shanghai",
             default_status=DefaultScheduleStatus.RUNNING,
         ),
         ScheduleDefinition(
-            cron_schedule="0 18 * * *",
+            cron_schedule="30 17 * * *",
             job=index_monitor_job,
             environment_vars=dict(os.environ),
             execution_timezone="Asia/Shanghai",
