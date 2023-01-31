@@ -1,19 +1,8 @@
 {% set number_fields = ["position", "cost"] %}
 
-with import as (
+with portfolio as (
     select * from {{ source('airtable', 'airtable_portfolio') }}
-),
-
-portfolio as (
-    select * from (
-        select
-            *,
-            row_number() over (
-                partition by code
-                order by created_at desc
-                ) as rn
-        from import) as t
-    where t.rn = 1
+    where created_at = (select max(created_at) from {{ source('airtable', 'airtable_portfolio') }})
 ),
 
 formatted as (
