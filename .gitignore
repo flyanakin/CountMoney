@@ -27,3 +27,4 @@ xdp_cloud_commons
 *.jar
 *.html
 **/.env
+**/.venv/
