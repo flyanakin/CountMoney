@@ -248,12 +248,10 @@ def tushare_forecast(context) -> pd.DataFrame:
 
     if __mode == 'daily':
         today = date.strftime(date.today(), "%Y%m%d")
-        data = pro.forecast_vip(ann_date=today)
+        data = pro.forecast_vip(ann_date=today, update_flag='1')
     elif __mode == 'para':
         data = pro.forecast_vip(
-            ts_code=__ts_code,
-            period=__period,
-            ann_date=__ann_date,
+            ts_code=__ts_code, period=__period, ann_date=__ann_date, update_flag='1'
         )
     else:
         ValueError("Unsupported value: " + str(context.op_config["mode"]))
