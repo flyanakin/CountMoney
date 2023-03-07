@@ -39,7 +39,7 @@ jobs:
         with:
           dagster_cloud_file: "$GITHUB_WORKSPACE/project-repo/dagster_cloud.yaml"
           build_output_dir: "$GITHUB_WORKSPACE/build"
-          python_version: "3.9"
+          python_version: "3.8"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
