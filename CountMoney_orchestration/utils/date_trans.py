@@ -1,7 +1,9 @@
 import pandas as pd
+from typing import List
 
 
-def report_date_generate(years: list[str]) -> list[str]:
+
+def report_date_generate(years: List[str]) -> List[str]:
     result = []
     for i in range(len(years)):
         q1 = years[i] + '0331'
