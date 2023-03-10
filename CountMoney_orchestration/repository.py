@@ -68,9 +68,6 @@ def CountMoney_orchestration():
         demo,
         daily_assets_job_resolved,
         portfolio_push_job,
-        performance_push_job,
-        preview_push_job,
-        index_monitor_job,
     ]
 
     all_sensors = [
