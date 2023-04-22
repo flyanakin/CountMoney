@@ -1,6 +1,5 @@
 {{ config(materialized='table') }}
 
-
 with import as (
     select * from {{ source('tushare', 'tushare_stock_basic') }}
     where market in ('中小板','主板','创业板','科创板') --去掉CDR和北交所
