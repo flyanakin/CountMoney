@@ -6,6 +6,8 @@ with import as (
     and name not ilike '%ST%'   --去掉st股
 ),
 
+
+
 formatted as (
     select
         ts_code,
